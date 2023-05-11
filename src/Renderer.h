@@ -6,6 +6,8 @@
 #include "IndexBuffer.h"
 #include "Shader.h"
 
+#include "OBJLoader.h"
+
 // Error handling
 #define ASSERT(x) if (!(x)) __debugbreak();
 #define GLCall(x) GLClearError();\
@@ -20,5 +22,5 @@ class Renderer {
 public:
     void Clear() const;
     void Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
-
+    void DrawObject(Shader& shader, ModelObject& m);
 };

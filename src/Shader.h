@@ -22,6 +22,7 @@ public:
 
 	void Bind() const;
 	void Unbind() const;
+	unsigned int GetRendererID() const;
 
 	// Set uniforms
 	void SetUniform4f(const std::string& name, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3);

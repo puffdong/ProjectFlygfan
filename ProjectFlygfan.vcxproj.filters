@@ -42,6 +42,12 @@
     <ClCompile Include="Dependencies\glm\detail\glm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\OBJLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BirdGame\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\Basic.shader" />
@@ -1340,6 +1346,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\OBJLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BirdGame\Space.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tiny_obj_loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

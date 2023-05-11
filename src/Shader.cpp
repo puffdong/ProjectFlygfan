@@ -100,6 +100,10 @@ void Shader::Unbind() const {
     GLCall(glUseProgram(0));
 }
 
+unsigned int Shader::GetRendererID() const {
+    return m_RendererID;
+}
+
 void Shader::SetUniform4f(const std::string& name, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3) 
 {
     GLCall(glUniform4f(GetUniformLocation(name), v0, v1, v2, v3));

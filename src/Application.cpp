@@ -1,3 +1,5 @@
+#define MAIN //related to VectorUtils4 and its dodgy implementation
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "glm/glm.hpp"
@@ -17,7 +19,30 @@
 #include "Shader.h"
 #include "Texture.h"
 
+glm::mat4 proj;
+glm::mat4 worldMatrix;
+glm::mat4 modelMatrix;
 
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+    // Close the window when the user presses the ESC key
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+        glfwSetWindowShouldClose(window, true);
+    }
+
+    // Perform other actions based on key input
+    if (key == GLFW_KEY_W && action == GLFW_PRESS) {
+        // Your code to move forward
+    }
+
+    if (key == GLFW_KEY_S && action == (GLFW_PRESS)) {
+        std::cout << "hej hej" << std::endl;
+    }
+}
+
+void initstuff() {
+    proj = glm::frustum(-0.5f, 0.5f, -0.5f, 0.5f, 1.0f, 256.0f);
+    
+}
 
 int main(void) 
 {
@@ -47,6 +72,8 @@ int main(void)
     if (glewInit() != GLEW_OK) {
         std::cout << "glew init Error!" << std::endl;
     }
+
+    glfwSetKeyCallback(window, key_callback);
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -110,6 +137,8 @@ int main(void)
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
+        glfwPollEvents();
+
         /* Render here */
         renderer.Clear();
         
