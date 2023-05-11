@@ -285,6 +285,7 @@
     <None Include="Dependencies\glm\gtx\vector_query.inl" />
     <None Include="Dependencies\glm\gtx\wrap.inl" />
     <None Include="res\shaders\Basic.shader" />
+    <None Include="res\shaders\Player.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Users\simon\Downloads\imgui-1.89.5\imgui-1.89.5\examples\libs\glfw\include\GLFW\glfw3.h" />

@@ -22,6 +22,9 @@
 glm::mat4 proj;
 glm::mat4 worldMatrix;
 glm::mat4 modelMatrix;
+glm::mat4 mvp;
+
+glm::vec3 cameraPos = glm::vec3(0, 2, -2);
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     // Close the window when the user presses the ESC key
@@ -41,7 +44,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 void initstuff() {
     proj = glm::frustum(-0.5f, 0.5f, -0.5f, 0.5f, 1.0f, 256.0f);
-    
+    worldMatrix = glm::lookAt(cameraPos, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
+    modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.f, 0.f, 0.f));
 }
 
 int main(void) 
@@ -91,6 +95,8 @@ int main(void)
         0,1,2,2,3,0 //info for which vertices correlate to each other to make up a cube
     };
 
+    initstuff();
+
 
     // ID of generated buffer in OpenGL
     unsigned int VAO;
@@ -107,15 +113,17 @@ int main(void)
 
     IndexBuffer ib(indices, 6);
 
-    glm::mat4 proj = glm::ortho(0.0f, 640.0f, 0.0f, 480.0f, -1.0f, 1.0f);
-    glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(200.0f, 0.0f, 0.0f));
-    glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(200, 200, 0));
-    glm::mat4 mvp = proj * view * model;
+    //glm::mat4 proj = glm::ortho(0.0f, 640.0f, 0.0f, 480.0f, -1.0f, 1.0f);
+    //glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(200.0f, 0.0f, 0.0f));
+    //glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(200, 200, 0));
+    mvp = proj * worldMatrix * modelMatrix;
     
     Shader s = Shader("res/shaders/Basic.shader");
     s.Bind();
     s.SetUniform4f("u_Color", 0.2f, 1.0f, 0.8f, 1.0f);
     s.SetUniformMat4("u_MVP", mvp);
+
+    ModelObject objey("res/models/bunny.obj");
 
     Texture texture("res/textures/grass.tga");
     texture.Bind();
@@ -144,8 +152,8 @@ int main(void)
         
         s.Bind();
         s.SetUniform4f("u_Color", r, 1.0f, 0.8f, 1.0f);
-        
-        renderer.Draw(va, ib, s);
+        objey.render();
+        //renderer.Draw(va, ib, s);
 
         if (r > 1.0f) {
             increment = -0.05f;

@@ -461,6 +461,7 @@
     </None>
     <None Include="..\..\..\Users\simon\Downloads\imgui-1.89.5\imgui-1.89.5\examples\example_emscripten_wgpu\web\index.html" />
     <None Include="..\..\..\Users\simon\Downloads\imgui-1.89.5\imgui-1.89.5\examples\libs\emscripten\shell_minimal.html" />
+    <None Include="res\shaders\Player.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">

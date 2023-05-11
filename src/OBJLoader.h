@@ -22,4 +22,5 @@ public:
 
 	void Bind() const;
 	void Unbind() const;
+	void createFlatGround(float width, float depth);
 };
