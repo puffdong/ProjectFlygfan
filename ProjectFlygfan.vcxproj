@@ -135,6 +135,7 @@
   <ItemGroup>
     <ClCompile Include="Dependencies\glm\detail\glm.cpp" />
     <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\BirdGame\Camera.cpp" />
     <ClCompile Include="src\BirdGame\Player.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\LoadTGA.cpp" />
@@ -285,6 +286,7 @@
     <None Include="Dependencies\glm\gtx\vector_query.inl" />
     <None Include="Dependencies\glm\gtx\wrap.inl" />
     <None Include="res\shaders\Basic.shader" />
+    <None Include="res\shaders\Camera.shader" />
     <None Include="res\shaders\Player.shader" />
   </ItemGroup>
   <ItemGroup>
@@ -572,6 +574,7 @@
     <ClInclude Include="Dependencies\glm\vec3.hpp" />
     <ClInclude Include="Dependencies\glm\vec4.hpp" />
     <ClInclude Include="Dependencies\glm\vector_relational.hpp" />
+    <ClInclude Include="src\BirdGame\Camera.h" />
     <ClInclude Include="src\BirdGame\Coin.h" />
     <ClInclude Include="src\BirdGame\Player.h" />
     <ClInclude Include="src\BirdGame\Space.h" />

@@ -219,13 +219,13 @@ namespace glm
 	template<typename T>
 	GLM_FUNC_QUALIFIER mat<4, 4, T, defaultp> eulerAngleYXZ
 	(
-		T const& yaw,
+		T const& mYaw,
 		T const& pitch,
 		T const& roll
 	)
 	{
-		T tmp_ch = glm::cos(yaw);
-		T tmp_sh = glm::sin(yaw);
+		T tmp_ch = glm::cos(mYaw);
+		T tmp_sh = glm::sin(mYaw);
 		T tmp_cp = glm::cos(pitch);
 		T tmp_sp = glm::sin(pitch);
 		T tmp_cb = glm::cos(roll);
@@ -604,13 +604,13 @@ namespace glm
 	template<typename T>
 	GLM_FUNC_QUALIFIER mat<4, 4, T, defaultp> yawPitchRoll
 	(
-		T const& yaw,
+		T const& mYaw,
 		T const& pitch,
 		T const& roll
 	)
 	{
-		T tmp_ch = glm::cos(yaw);
-		T tmp_sh = glm::sin(yaw);
+		T tmp_ch = glm::cos(mYaw);
+		T tmp_sh = glm::sin(mYaw);
 		T tmp_cp = glm::cos(pitch);
 		T tmp_sp = glm::sin(pitch);
 		T tmp_cb = glm::cos(roll);

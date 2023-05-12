@@ -121,7 +121,7 @@ namespace glm
 	/// @see gtx_euler_angles
 	template<typename T>
 	GLM_FUNC_DECL mat<4, 4, T, defaultp> eulerAngleYXZ(
-		T const& yaw,
+		T const& mYaw,
 		T const& pitch,
 		T const& roll);
 
@@ -209,7 +209,7 @@ namespace glm
 	/// @see gtx_euler_angles
 	template<typename T>
 	GLM_FUNC_DECL mat<4, 4, T, defaultp> yawPitchRoll(
-		T const& yaw,
+		T const& mYaw,
 		T const& pitch,
 		T const& roll);
 

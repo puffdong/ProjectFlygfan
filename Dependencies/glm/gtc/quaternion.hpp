@@ -71,7 +71,7 @@ namespace glm
 	///
 	/// @see gtc_quaternion
 	template<typename T, qualifier Q>
-	GLM_FUNC_DECL T yaw(qua<T, Q> const& x);
+	GLM_FUNC_DECL T mYaw(qua<T, Q> const& x);
 
 	/// Converts a quaternion to a 3 * 3 matrix.
 	///

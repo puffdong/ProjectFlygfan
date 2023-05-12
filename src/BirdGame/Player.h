@@ -10,7 +10,7 @@ public:
 	bool isOnGround;
 
 	float pitch; 
-	float yaw; 
+	float mYaw; 
 	
 	// Game logic related
 	int numberOfCoins;

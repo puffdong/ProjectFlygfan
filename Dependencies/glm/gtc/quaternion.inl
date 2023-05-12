@@ -9,7 +9,7 @@ namespace glm
 	template<typename T, qualifier Q>
 	GLM_FUNC_QUALIFIER vec<3, T, Q> eulerAngles(qua<T, Q> const& x)
 	{
-		return vec<3, T, Q>(pitch(x), yaw(x), roll(x));
+		return vec<3, T, Q>(pitch(x), mYaw(x), roll(x));
 	}
 
 	template<typename T, qualifier Q>
@@ -32,7 +32,7 @@ namespace glm
 	}
 
 	template<typename T, qualifier Q>
-	GLM_FUNC_QUALIFIER T yaw(qua<T, Q> const& q)
+	GLM_FUNC_QUALIFIER T mYaw(qua<T, Q> const& q)
 	{
 		return asin(clamp(static_cast<T>(-2) * (q.x * q.z - q.w * q.y), static_cast<T>(-1), static_cast<T>(1)));
 	}
