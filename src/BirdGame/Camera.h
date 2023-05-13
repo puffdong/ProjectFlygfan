@@ -1,6 +1,5 @@
 #pragma once
 #define _USE_MATH_DEFINES
-#include <algorithm>
 #include <string>
 #include <math.h>
 #include "glm/glm.hpp"
@@ -13,12 +12,12 @@ private:
 	const float kTargetDistance = 5.f;
 
 public:
-	glm::vec3 mPos, mDir, mUp;
+	glm::vec3 mTargetPos, mDir, mUp;
 	float mPitch, mYaw;
 	Camera(glm::vec3 pos, glm::vec3 front);
 
 	glm::mat4 getLookAt();
 	void rotate(float pitchDiff, float yawDiff);
-	void updatePosition(glm::vec3 targetPos);
+	void updateTargetPos(glm::vec3 targetPos);
 	std::string toString();
 };

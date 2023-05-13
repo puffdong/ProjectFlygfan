@@ -51,8 +51,8 @@ void initstuff() {
     worldMatrix = glm::lookAt(old_cameraPos, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
     modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.f, 0.f, 0.f));
 
-    glm::vec3 cameraPos(0.f, 2.f, -2.f);
-    glm::vec3 cameraDir(0.f, -2.f, 2.f);
+    glm::vec3 cameraPos(0.f, 0.f, -2.f);
+    glm::vec3 cameraDir(0.f, 0.f, 2.f);
     camera = new Camera(cameraPos, cameraDir);
 }
 
@@ -154,7 +154,7 @@ int main(void)
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
-        camera->rotate(0.f, 0.1f);
+        camera->rotate(0.f, 0.01f);
         mvp = proj * camera->getLookAt() * modelMatrix;
 
         /* Render here */
