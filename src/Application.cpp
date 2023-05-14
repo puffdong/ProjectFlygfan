@@ -187,7 +187,7 @@ int main(void)
 
         r += increment;
         */
-        space->tick(0.5f, bm);
+        space->tick(deltaTime, bm);
         space->renderWorld();
 
         /* Swap front and back buffers */

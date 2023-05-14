@@ -43,7 +43,7 @@ private:
 	// Coin logic
 	ModelObject* coinModel; // Use the same model data for every coin
 	Shader* coinShader;
-	std::vector<Coin> coins;
+	std::vector<Coin*> coins;
 
 	void addCoin(glm::vec3 pos);
 	

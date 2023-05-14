@@ -42,8 +42,8 @@ void Space::tick(float delta, ButtonMap bm) {
 
 	camera->rotate(pitch, yaw);
 
-	for (Coin c : coins) {
-		c.tick(delta);
+	for (Coin* c : coins) {
+		c->tick(delta);
 	}
 }
 
@@ -58,9 +58,9 @@ void Space::renderWorld() {
 	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), player->getPosition());
 	glm::mat4 mvp = proj * camera->getLookAt() * modelMatrix;
 
-	for (Coin c : coins) {
-		glm::mat4 mvp = proj * viewMatrix * c.getModelMatrix();
-		c.render(mvp);
+	for (Coin* c : coins) {
+		glm::mat4 mvp = proj * viewMatrix * c->getModelMatrix();
+		c->render(mvp);
 	}
 
 	player->draw(mvp);
@@ -86,7 +86,7 @@ void Space::loadLevel1() {
 }
 
 void Space::addCoin(glm::vec3 pos) {
-	Coin c = Coin(coinShader, coinModel, pos);
+	Coin* c = new Coin(coinShader, coinModel, pos);
 	coins.push_back(c);
 }
 

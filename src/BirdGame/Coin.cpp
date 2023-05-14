@@ -3,9 +3,11 @@
 #include <iostream>
 
 Coin::Coin(Shader* s, ModelObject* m, glm::vec3 pos)
-	: shader(s), model(m), position(pos), rotation(0.f), yaw(0.f), wobble(0.f), goingUpOrDown(0.3f)
+	: shader(s), model(m), position(pos), rotation(0.f)
 {
-
+	yaw = 0.f;
+	wobble = 0.f;
+	goingUpOrDown = 0.05f;
 }
 
 Coin::~Coin() {
@@ -13,13 +15,15 @@ Coin::~Coin() {
 }
 
 void Coin::tick(float delta) {
-	yaw += 360.f * delta;
+	yaw += 1.5f * delta;
+	std::cout << delta << " : delta " << std::endl;
+	std::cout << yaw << std::endl;
 	Coin::wobble += goingUpOrDown;
-	if (wobble > 1.5f) {
-		goingUpOrDown = -0.3f;
+	if (wobble > 0.8f) {
+		goingUpOrDown = -0.05f;
 	}
-	if (wobble < -1.5) {
-		goingUpOrDown = 0.3f;
+	if (wobble < -0.8f) {
+		goingUpOrDown = 0.05f;
 	}
 }
 
@@ -35,7 +39,7 @@ bool Coin::isWithingCollectionRange(glm::vec3 pos1, glm::vec3 pos2) {
 }
 
 glm::mat4 Coin::getModelMatrix() {
-	return glm::translate(glm::mat4(1.f), Coin::position + glm::vec3(0.f, Coin::wobble, 0.f)) * glm::rotate(glm::mat4(1.f), yaw * 5.f, glm::vec3(1.f, 0.f, 0.f));
+	return glm::translate(glm::mat4(1.f), position + glm::vec3(0.f, wobble, 0.f)) * glm::rotate(glm::mat4(1.f), yaw, glm::vec3(0.f, 1.f, 0.f));
 }
 
 void Coin::render(glm::mat4 mvp) {
