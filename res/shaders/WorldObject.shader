@@ -30,9 +30,10 @@ in vec2 v_texCoord;
 uniform mat4 modelMatrix;
 uniform mat4 worldMatrix;
 uniform sampler2D u_Texture;
-uniform vec3 lightColors[1];
-uniform vec3 lightDirs[1];
-uniform bool isDirectional[1];
+uniform int numLights;
+uniform vec3 lightColors[10];
+uniform vec3 lightDirs[10];
+uniform bool isDirectional[10];
 uniform float specularExponent;
 
 void main()
@@ -49,7 +50,7 @@ void main()
 
 	vec3 result_color = vec3(0.0, 0.0, 0.0);
 
-	for (int i = 0; i < 1; i++) {
+	for (int i = 0; i < numLights; i++) {
 		vec3 lightDir;
 		if (isDirectional[i]) {
 			lightDir = normalize(mat3(worldMatrix) * lightDirs[i]);

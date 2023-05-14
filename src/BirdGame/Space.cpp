@@ -3,9 +3,16 @@
 
 
 Space::Space() {
-	lightColors[0] = glm::vec3(1.f, 1.f, 1.f);
-	lightDirs[0] = glm::vec3(1.f, 1.f, 0.f);
-	isDirectional[0] = 1;
+	LightSource newLightSources[] = {
+		LightSource(glm::vec3(0.f, 0.f, 1.f), glm::vec3(1.f, 0.f, 0.f), true),
+		LightSource(glm::vec3(1.f, 0.f, 0.f), glm::vec3(-1.f, 0.f, 0.f), true)
+	};
+
+	for (LightSource& source : newLightSources) {
+		lightSources.push_back(source);
+	}
+	
+	isDirectional.push_back(1);
 
 	player = new Player(glm::vec3(0.f, 0.f, 0.f));
 
@@ -55,6 +62,16 @@ void Space::renderWorld() {
 		//glm::mat4 mvp = proj * viewMatrix * o->getModelMatrix();
 		Shader* shader = o->getShader();
 		shader->Bind();
+
+		std::vector<glm::vec3> lightColors;
+		std::vector<glm::vec3> lightDirs;
+		std::vector<int> isDirectional;
+		for (LightSource& light : lightSources) {
+			lightColors.push_back(light.color);
+			lightDirs.push_back(light.dir);
+			isDirectional.push_back((int)light.isDirectional);
+		}
+		shader->SetUniform1i("numLights", lightSources.size());
 		shader->SetUniform3fv("lightColors", lightColors);
 		shader->SetUniform3fv("lightDirs", lightDirs);
 		shader->SetUniform1iv("isDirectional", isDirectional);
@@ -84,9 +101,9 @@ void Space::loadLevel1() {
 
 	wObjects.push_back(obj1);
 
-	std::string testString = "res/models/bunny.obj";
+	std::string testString = "res/models/teapot.obj";
 
-	WorldObject* testobject = new WorldObject(shader, testString, glm::vec3(-1.f, 0.f, 0.f), glm::vec3(0));
+	WorldObject* testobject = new WorldObject(shader, testString, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0));
 	wObjects.push_back(testobject);
 
 	setUpCoinsLevel1();

@@ -34,7 +34,7 @@ void Player::move(ButtonMap bm) {
 		movement = glm::normalize(movement);
 	}
 	
-	position += movement * 0.01f;
+	position += movement * 0.1f;
 }
 
 void Player::draw(glm::mat4 mvp) {

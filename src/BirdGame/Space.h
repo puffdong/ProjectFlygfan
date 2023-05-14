@@ -12,6 +12,7 @@
 #include "Camera.h"
 
 #include "Utility/ButtonMap.h"
+#include "Utility/LightSource.h"
 
 class Space {
 private:
@@ -22,12 +23,9 @@ private:
 	std::vector<WorldObject*> wObjects;
 
 	glm::mat4 proj = glm::frustum(-0.5f, 0.5f, -0.5f, 0.5f, 1.0f, 256.0f);
-	
-	glm::vec3 lightColors[1];
-	glm::vec3 lightDirs[1];
-	int isDirectional[1];
 
-	float specularExponent = 100.f;
+	std::vector<LightSource> lightSources;
+	std::vector<int> isDirectional;
 	
 public:
 	Space();
