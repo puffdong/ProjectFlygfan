@@ -25,8 +25,11 @@ public:
 	unsigned int GetRendererID() const;
 
 	// Set uniforms
+	void SetUniform1f(const std::string& name, GLfloat v0);
 	void SetUniform4f(const std::string& name, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3);
+	void SetUniform3fv(const std::string& name, std::vector<glm::vec3> inVector);
 	void SetUniform1i(const std::string& name, GLint i);
+	void SetUniform1iv(const std::string& name, std::vector<GLint> inVector);
 	void SetUniformMat4(const std::string& name, const glm::mat4& matrix);
 
 

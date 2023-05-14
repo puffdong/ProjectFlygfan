@@ -103,14 +103,29 @@ unsigned int Shader::GetRendererID() const {
     return m_RendererID;
 }
 
+void Shader::SetUniform1f(const std::string& name, GLfloat v0)
+{
+    GLCall(glUniform1f(GetUniformLocation(name), v0));
+}
+
 void Shader::SetUniform4f(const std::string& name, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3) 
 {
     GLCall(glUniform4f(GetUniformLocation(name), v0, v1, v2, v3));
 }
 
+void Shader::SetUniform3fv(const std::string& name, std::vector<glm::vec3> inVector)
+{
+    GLCall(glUniform3fv(GetUniformLocation(name), (GLsizei)inVector.size(), &inVector[0].x));
+}
+
 void Shader::SetUniform1i(const std::string& name, GLint i) 
 {
     GLCall(glUniform1i(GetUniformLocation(name), i));
+}
+
+void Shader::SetUniform1iv(const std::string& name, std::vector<GLint> inVector)
+{
+    GLCall(glUniform1iv(GetUniformLocation(name), (GLsizei)inVector.size(), &inVector[0]));
 }
 
 void Shader::SetUniformMat4(const std::string& name, const glm::mat4& matrix) {

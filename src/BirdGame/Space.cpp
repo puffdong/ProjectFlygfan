@@ -14,7 +14,7 @@ Space::Space() {
 	camera = new Camera(cameraDir, player);
 
 	// coin stuff
-	coinModel = new ModelObject("res/models/Coin.obj");
+	coinModel = new ModelObject("res/models/bunny.obj");
 	coinShader = new Shader("res/shaders/Coin.shader");
 
 
@@ -52,8 +52,11 @@ void Space::renderWorld() {
 	glm::mat4 viewMatrix = camera->getLookAt();
 
 	for (WorldObject* o : wObjects) {
-		glm::mat4 mvp = proj * viewMatrix * o->getModelMatrix();
-		o->draw(mvp);
+		//glm::mat4 mvp = proj * viewMatrix * o->getModelMatrix();
+		Shader* shader = o->getShader();
+		/*shader->SetUniform3fv("lightColors", lightColors);
+		shader->SetUniform3fv("lightDirs", lightDirs);*/
+		o->draw(proj, viewMatrix, o->getModelMatrix());
 	}
 	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), player->getPosition());
 	glm::mat4 mvp = proj * camera->getLookAt() * modelMatrix;
@@ -70,14 +73,16 @@ void Space::loadLevel1() {
 	player->setPosition(glm::vec3(0.f, 1.f, 0.f));
 
 	// load all the world objects and set up the world
-	Shader* shader = new Shader("res/shaders/Basic.shader");
+	Shader* shader = new Shader("res/shaders/WorldObject.shader");
+	/*shader->SetUniform3fv("lightColors", lightColors);
+	shader->SetUniform3fv("lightDirs", lightDirs);*/
 
 	ModelObject* m1 = new ModelObject(10.f, 10.f);
 	WorldObject* obj1 = new WorldObject(shader, m1, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 0.f));
 
 	wObjects.push_back(obj1);
 
-	std::string testString = "res/models/teddy.obj";
+	std::string testString = "res/models/bunny.obj";
 
 	WorldObject* testobject = new WorldObject(shader, testString, glm::vec3(-1.f, 0.f, 0.f), glm::vec3(0));
 	wObjects.push_back(testobject);

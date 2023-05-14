@@ -16,8 +16,6 @@ Coin::~Coin() {
 
 void Coin::tick(float delta) {
 	yaw += 1.5f * delta;
-	std::cout << delta << " : delta " << std::endl;
-	std::cout << yaw << std::endl;
 	Coin::wobble += goingUpOrDown;
 	if (wobble > 0.8f) {
 		goingUpOrDown = -0.05f;

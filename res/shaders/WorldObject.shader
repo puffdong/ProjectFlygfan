@@ -29,7 +29,6 @@ in vec2 v_texCoord;
 
 uniform mat4 modelMatrix;
 uniform mat4 worldMatrix;
-uniform vec4 u_Color;
 uniform sampler2D u_Texture;
 uniform vec3 lightColors[1];
 uniform vec3 lightDirs[1];
@@ -44,22 +43,22 @@ void main()
 
 	vec3 surfacePos = vec3(worldMatrix * modelMatrix * vec4(v_pos, 1.0));
 
-	mat3 normalMatrix = transpose(inverse(mat3(mdlMatrix)));
-	vec3 norm = mat3(wldMatrix) * normalMatrix * in_Normal;
-	normalize(exNormal);
+	mat3 normalMatrix = transpose(inverse(mat3(modelMatrix)));
+	vec3 norm = mat3(worldMatrix) * normalMatrix * v_normal;
+	normalize(norm);
 
-	vec3 result_color = vec3(0, 0, 0);
+	vec3 result_color = vec3(0.0, 0.0, 0.0);
 
 	for (int i = 0; i < 1; i++) {
 		vec3 lightDir;
 		if (isDirectional[i]) {
-			lightDir = normalize(mat3(wldMatrix) * lightSourcesDirPosArr[i]);
+			lightDir = normalize(mat3(worldMatrix) * lightDirs[i]);
 		} else {
-			vec3 lightPosition = vec3(wldMatrix * vec4(lightSourcesDirPosArr[i], 1.0));
-			lightDir = normalize(lightPosition - exSurfacePos);
+			vec3 lightPosition = vec3(worldMatrix * vec4(lightDirs[i], 1.0));
+			lightDir = normalize(lightPosition - surfacePos);
 		}
-		vec3 lightColor = lightSourcesColorArr[i];
-		vec3 viewDir = normalize(-exSurfacePos);
+		vec3 lightColor = lightColors[i];
+		vec3 viewDir = normalize(-surfacePos);
 
 		// Diffuse lighting
 		float shade = max(dot(norm, lightDir), 0.0);
