@@ -135,7 +135,11 @@
   <ItemGroup>
     <ClCompile Include="Dependencies\glm\detail\glm.cpp" />
     <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\BirdGame\Camera.cpp" />
+    <ClCompile Include="src\BirdGame\Coin.cpp" />
     <ClCompile Include="src\BirdGame\Player.cpp" />
+    <ClCompile Include="src\BirdGame\Space.cpp" />
+    <ClCompile Include="src\BirdGame\WorldObject.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\LoadTGA.cpp" />
     <ClCompile Include="src\OBJLoader.cpp" />
@@ -148,6 +152,22 @@
   <ItemGroup>
     <None Include="..\..\..\Users\simon\Downloads\imgui-1.89.5\imgui-1.89.5\examples\example_emscripten_wgpu\web\index.html" />
     <None Include="..\..\..\Users\simon\Downloads\imgui-1.89.5\imgui-1.89.5\examples\libs\emscripten\shell_minimal.html" />
+    <None Include="Dependencies\GLEW\bin\Release\Win32\glew32.dll" />
+    <None Include="Dependencies\GLEW\bin\Release\Win32\glewinfo.exe" />
+    <None Include="Dependencies\GLEW\bin\Release\Win32\visualinfo.exe" />
+    <None Include="Dependencies\GLEW\bin\Release\x64\glew32.dll" />
+    <None Include="Dependencies\GLEW\bin\Release\x64\glewinfo.exe" />
+    <None Include="Dependencies\GLEW\bin\Release\x64\visualinfo.exe" />
+    <None Include="Dependencies\GLEW\doc\advanced.html" />
+    <None Include="Dependencies\GLEW\doc\basic.html" />
+    <None Include="Dependencies\GLEW\doc\build.html" />
+    <None Include="Dependencies\GLEW\doc\credits.html" />
+    <None Include="Dependencies\GLEW\doc\glew.html" />
+    <None Include="Dependencies\GLEW\doc\glxew.html" />
+    <None Include="Dependencies\GLEW\doc\index.html" />
+    <None Include="Dependencies\GLEW\doc\install.html" />
+    <None Include="Dependencies\GLEW\doc\log.html" />
+    <None Include="Dependencies\GLEW\doc\wglew.html" />
     <None Include="Dependencies\glm\detail\func_common.inl" />
     <None Include="Dependencies\glm\detail\func_common_simd.inl" />
     <None Include="Dependencies\glm\detail\func_exponential.inl" />
@@ -285,11 +305,19 @@
     <None Include="Dependencies\glm\gtx\vector_query.inl" />
     <None Include="Dependencies\glm\gtx\wrap.inl" />
     <None Include="res\shaders\Basic.shader" />
+    <None Include="res\shaders\Coin.shader" />
     <None Include="res\shaders\Player.shader" />
+    <None Include="res\shaders\WorldObject.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Users\simon\Downloads\imgui-1.89.5\imgui-1.89.5\examples\libs\glfw\include\GLFW\glfw3.h" />
     <ClInclude Include="..\..\..\Users\simon\Downloads\imgui-1.89.5\imgui-1.89.5\examples\libs\glfw\include\GLFW\glfw3native.h" />
+    <ClInclude Include="Dependencies\GLEW\include\GL\eglew.h" />
+    <ClInclude Include="Dependencies\GLEW\include\GL\glew.h" />
+    <ClInclude Include="Dependencies\GLEW\include\GL\glxew.h" />
+    <ClInclude Include="Dependencies\GLEW\include\GL\wglew.h" />
+    <ClInclude Include="Dependencies\GLFW\include\GLFW\glfw3.h" />
+    <ClInclude Include="Dependencies\GLFW\include\GLFW\glfw3native.h" />
     <ClInclude Include="Dependencies\glm\common.hpp" />
     <ClInclude Include="Dependencies\glm\detail\compute_common.hpp" />
     <ClInclude Include="Dependencies\glm\detail\compute_vector_relational.hpp" />
@@ -572,9 +600,12 @@
     <ClInclude Include="Dependencies\glm\vec3.hpp" />
     <ClInclude Include="Dependencies\glm\vec4.hpp" />
     <ClInclude Include="Dependencies\glm\vector_relational.hpp" />
+    <ClInclude Include="src\BirdGame\Camera.h" />
     <ClInclude Include="src\BirdGame\Coin.h" />
     <ClInclude Include="src\BirdGame\Player.h" />
     <ClInclude Include="src\BirdGame\Space.h" />
+    <ClInclude Include="src\BirdGame\Utility\ButtonMap.h" />
+    <ClInclude Include="src\BirdGame\WorldObject.h" />
     <ClInclude Include="src\IndexBuffer.h" />
     <ClInclude Include="src\LoadTGA.h" />
     <ClInclude Include="src\OBJLoader.h" />

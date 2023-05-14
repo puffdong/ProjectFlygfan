@@ -11,6 +11,10 @@ ModelObject::ModelObject(const std::string& filepath) {
     loadThroughTiny(filepath);
 }
 
+ModelObject::ModelObject(float width, float depth) {
+    createFlatGround(width, depth);
+}
+
 ModelObject::~ModelObject() {
     glDeleteVertexArrays(1, &m_VAO);
     glDeleteBuffers(1, &m_VBO);
@@ -157,28 +161,7 @@ void ModelObject::render() {
 
 
 void ModelObject::Bind() const {
-	/*glBindVertexArray(model->vao); //Select VAO
-
-	glBindBuffer(GL_ARRAY_BUFFER, model->vb);
-
-	GLint loc;
-	unsigned int id = shader.GetRendererID();
-
-	GLCall(loc = glGetAttribLocation(id, "position"));
-	glVertexAttribPointer(loc, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(loc);
-
-	GLCall(loc = glGetAttribLocation(id, "normal"));
-	glBindBuffer(GL_ARRAY_BUFFER, model->nb);
-	glVertexAttribPointer(loc, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(loc);
-
-	if (model->texCoordArray != NULL) {
-		GLCall(loc = glGetAttribLocation(id, "texCoord"));
-		glBindBuffer(GL_ARRAY_BUFFER, model->tb);
-		glVertexAttribPointer(loc, 2, GL_FLOAT, GL_FALSE, 0, 0);
-		glEnableVertexAttribArray(loc);
-	} */
+	
 }
 
 void ModelObject::Unbind() const {

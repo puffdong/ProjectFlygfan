@@ -48,6 +48,18 @@
     <ClCompile Include="src\BirdGame\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\BirdGame\Space.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BirdGame\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BirdGame\WorldObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BirdGame\Coin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\Basic.shader" />
@@ -462,6 +474,24 @@
     <None Include="..\..\..\Users\simon\Downloads\imgui-1.89.5\imgui-1.89.5\examples\example_emscripten_wgpu\web\index.html" />
     <None Include="..\..\..\Users\simon\Downloads\imgui-1.89.5\imgui-1.89.5\examples\libs\emscripten\shell_minimal.html" />
     <None Include="res\shaders\Player.shader" />
+    <None Include="Dependencies\GLEW\doc\advanced.html" />
+    <None Include="Dependencies\GLEW\doc\basic.html" />
+    <None Include="Dependencies\GLEW\doc\build.html" />
+    <None Include="Dependencies\GLEW\doc\credits.html" />
+    <None Include="Dependencies\GLEW\doc\glew.html" />
+    <None Include="Dependencies\GLEW\doc\glxew.html" />
+    <None Include="Dependencies\GLEW\doc\index.html" />
+    <None Include="Dependencies\GLEW\doc\install.html" />
+    <None Include="Dependencies\GLEW\doc\log.html" />
+    <None Include="Dependencies\GLEW\doc\wglew.html" />
+    <None Include="Dependencies\GLEW\bin\Release\Win32\glew32.dll" />
+    <None Include="Dependencies\GLEW\bin\Release\Win32\glewinfo.exe" />
+    <None Include="Dependencies\GLEW\bin\Release\Win32\visualinfo.exe" />
+    <None Include="Dependencies\GLEW\bin\Release\x64\glew32.dll" />
+    <None Include="Dependencies\GLEW\bin\Release\x64\glewinfo.exe" />
+    <None Include="Dependencies\GLEW\bin\Release\x64\visualinfo.exe" />
+    <None Include="res\shaders\WorldObject.shader" />
+    <None Include="res\shaders\Coin.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -1353,6 +1383,33 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\tiny_obj_loader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\GLEW\include\GL\eglew.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\GLEW\include\GL\glew.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\GLEW\include\GL\glxew.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\GLEW\include\GL\wglew.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\GLFW\include\GLFW\glfw3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\GLFW\include\GLFW\glfw3native.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BirdGame\Utility\ButtonMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BirdGame\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BirdGame\WorldObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

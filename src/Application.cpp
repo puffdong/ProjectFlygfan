@@ -1,5 +1,3 @@
-#define MAIN //related to VectorUtils4 and its dodgy implementation
-
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "glm/glm.hpp"
@@ -19,12 +17,18 @@
 #include "Shader.h"
 #include "Texture.h"
 
-glm::mat4 proj;
-glm::mat4 worldMatrix;
-glm::mat4 modelMatrix;
-glm::mat4 mvp;
 
-glm::vec3 cameraPos = glm::vec3(0, 2, -2);
+#include "BirdGame/Space.h"
+
+#include "BirdGame/Player.h"
+#include "BirdGame/Camera.h"
+
+#include "BirdGame/Utility/ButtonMap.h"
+
+ButtonMap bm;
+
+Space* space;
+
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     // Close the window when the user presses the ESC key
@@ -32,21 +36,70 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         glfwSetWindowShouldClose(window, true);
     }
 
-    // Perform other actions based on key input
-    if (key == GLFW_KEY_W && action == GLFW_PRESS) {
-        // Your code to move forward
+    if (action == GLFW_PRESS) {
+        switch (key) {
+            case GLFW_KEY_W:
+                bm.W = true;
+                break;
+            case GLFW_KEY_A:
+                bm.A = true;
+                break;
+            case GLFW_KEY_S:
+                bm.S = true;
+                break;
+            case GLFW_KEY_D:
+                bm.D = true;
+                break;
+            case GLFW_KEY_SPACE:
+                bm.Space = true;
+                break;
+            case GLFW_KEY_UP:
+                bm.Up = true;
+                break;
+            case GLFW_KEY_DOWN:
+                bm.Down = true;
+                break;
+            case GLFW_KEY_LEFT:
+                bm.Left = true;
+                break;
+            case GLFW_KEY_RIGHT:
+                bm.Right = true;
+                break;
+        }
     }
-
-    if (key == GLFW_KEY_S && action == (GLFW_PRESS)) {
-        std::cout << "hej hej" << std::endl;
+    else if (action == GLFW_RELEASE) {
+        switch (key) {
+            case GLFW_KEY_W:
+                bm.W = false;
+                break;
+            case GLFW_KEY_A:
+                bm.A = false;
+                break;
+            case GLFW_KEY_S:
+                bm.S = false;
+                break;
+            case GLFW_KEY_D:
+                bm.D = false;
+                break;
+            case GLFW_KEY_SPACE:
+                bm.Space = false;
+                break;
+            case GLFW_KEY_UP:
+                bm.Up = false;
+                break;
+            case GLFW_KEY_DOWN:
+                bm.Down = false;
+                break;
+            case GLFW_KEY_LEFT:
+                bm.Left = false;
+                break;
+            case GLFW_KEY_RIGHT:
+                bm.Right = false;
+                break;
+        }
     }
 }
 
-void initstuff() {
-    proj = glm::frustum(-0.5f, 0.5f, -0.5f, 0.5f, 1.0f, 256.0f);
-    worldMatrix = glm::lookAt(cameraPos, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f));
-    modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.f, 0.f, 0.f));
-}
 
 int main(void) 
 {
@@ -59,6 +112,7 @@ int main(void)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_DEPTH_BITS, 24);
 
     /* Create a windowed mode window and its OpenGL context */
     window = glfwCreateWindow(640, 480, "Project Birdo", NULL, NULL);
@@ -81,77 +135,46 @@ int main(void)
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    float positions[] = {
-        100.0f, 100.0f, 0.0f, 0.0f, //cube vertices
-        200.0f, 100.0f, 1.0f, 0.0f,
-        200.0f, 200.0f, 1.0f, 1.0f,
-        100.0f, 200.0f, 0.0f, 1.0f
-    };
-
-
-
-    unsigned int indices[] = {
-        0,1,2,2,3,0 //info for which vertices correlate to each other to make up a cube
-    };
-
-    initstuff();
-
-
-    // ID of generated buffer in OpenGL
-    unsigned int VAO;
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
-
-    VertexArray va;
-
-    VertexBuffer vb(positions, 4 * 4 * sizeof(float));
-    VertexBufferLayout layout;
-    layout.Push(GL_FLOAT, 2);
-    layout.Push(GL_FLOAT, 2);
-    va.AddBuffer(vb, layout);
-
-    IndexBuffer ib(indices, 6);
-
-    //glm::mat4 proj = glm::ortho(0.0f, 640.0f, 0.0f, 480.0f, -1.0f, 1.0f);
-    //glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(200.0f, 0.0f, 0.0f));
-    //glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(200, 200, 0));
-    mvp = proj * worldMatrix * modelMatrix;
-    
-    Shader s = Shader("res/shaders/Basic.shader");
-    s.Bind();
-    s.SetUniform4f("u_Color", 0.2f, 1.0f, 0.8f, 1.0f);
-    s.SetUniformMat4("u_MVP", mvp);
-
-    ModelObject objey("res/models/bunny.obj");
-
-    Texture texture("res/textures/grass.tga");
-    texture.Bind();
-    s.SetUniform1i("u_Texture", 0);
-
-    va.Unbind();
-    vb.Unbind();
-    ib.Unbind();
-    s.Unbind();
+    GLCall(glEnable(GL_DEPTH_TEST));
+    //glEnable(GL_CULL_FACE);
 
     Renderer renderer;
 
-    
-    
+    Texture texture("res/textures/grass.tga");
+    texture.Bind();
 
-    float r = 0.0f;
-    float increment = 0.05f;
+    space = new Space();
+
+   
+
+    //glEnable(GL_CULL_FACE);
+    
+    float lastTime = glfwGetTime();
+
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
 
-        /* Render here */
+        float currentTime = glfwGetTime();
+        float deltaTime = currentTime - lastTime;
+        lastTime = currentTime;
+
         renderer.Clear();
+        /* player->tick(0, bm);
+        camera->updateTargetPos();
+        camera->rotate(0.f, 0.01f);
+
+        
         
         s.Bind();
         s.SetUniform4f("u_Color", r, 1.0f, 0.8f, 1.0f);
+        modelMatrix = glm::translate(glm::mat4(1.0f), player->getPosition());
+        std::cout << player->getPosition().x  << std::endl;
+        mvp = proj * camera->getLookAt() * modelMatrix;
+        s.SetUniformMat4("u_MVP", mvp);
+
         objey.render();
         //renderer.Draw(va, ib, s);
 
@@ -163,6 +186,9 @@ int main(void)
         }
 
         r += increment;
+        */
+        space->tick(0.5f, bm);
+        space->renderWorld();
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);

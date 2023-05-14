@@ -15,6 +15,7 @@ public:
 	unsigned int numIndices;
 
 	ModelObject(const std::string& filepath);
+	ModelObject(float widht, float depth);
 	~ModelObject();
 	void loadThroughTiny(const std::string& filepath);
 
