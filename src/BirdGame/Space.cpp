@@ -3,9 +3,9 @@
 
 
 Space::Space() {
-	lightColors.push_back(glm::vec3(1.f, 1.f, 1.f));
-	lightDirs.push_back(glm::vec3(1.f, 0.f, 0.f));
-	isDirectional.push_back(1);
+	lightColors[0] = glm::vec3(1.f, 1.f, 1.f);
+	lightDirs[0] = glm::vec3(1.f, 1.f, 0.f);
+	isDirectional[0] = 1;
 
 	player = new Player(glm::vec3(0.f, 0.f, 0.f));
 
@@ -14,7 +14,7 @@ Space::Space() {
 	camera = new Camera(cameraDir, player);
 
 	// coin stuff
-	coinModel = new ModelObject("res/models/bunny.obj");
+	coinModel = new ModelObject("res/models/Coin.obj");
 	coinShader = new Shader("res/shaders/Coin.shader");
 
 
@@ -54,8 +54,10 @@ void Space::renderWorld() {
 	for (WorldObject* o : wObjects) {
 		//glm::mat4 mvp = proj * viewMatrix * o->getModelMatrix();
 		Shader* shader = o->getShader();
-		/*shader->SetUniform3fv("lightColors", lightColors);
-		shader->SetUniform3fv("lightDirs", lightDirs);*/
+		shader->Bind();
+		shader->SetUniform3fv("lightColors", lightColors);
+		shader->SetUniform3fv("lightDirs", lightDirs);
+		shader->SetUniform1iv("isDirectional", isDirectional);
 		o->draw(proj, viewMatrix, o->getModelMatrix());
 	}
 	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), player->getPosition());

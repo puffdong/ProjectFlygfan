@@ -605,6 +605,7 @@
     <ClInclude Include="src\BirdGame\Player.h" />
     <ClInclude Include="src\BirdGame\Space.h" />
     <ClInclude Include="src\BirdGame\Utility\ButtonMap.h" />
+    <ClInclude Include="src\BirdGame\WorldLight.h" />
     <ClInclude Include="src\BirdGame\WorldObject.h" />
     <ClInclude Include="src\IndexBuffer.h" />
     <ClInclude Include="src\LoadTGA.h" />

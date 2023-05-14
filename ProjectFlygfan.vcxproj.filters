@@ -1412,5 +1412,8 @@
     <ClInclude Include="src\BirdGame\WorldObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\BirdGame\WorldLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

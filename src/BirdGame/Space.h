@@ -23,9 +23,9 @@ private:
 
 	glm::mat4 proj = glm::frustum(-0.5f, 0.5f, -0.5f, 0.5f, 1.0f, 256.0f);
 	
-	std::vector<glm::vec3> lightColors;
-	std::vector<glm::vec3> lightDirs;
-	std::vector<int> isDirectional;
+	glm::vec3 lightColors[1];
+	glm::vec3 lightDirs[1];
+	int isDirectional[1];
 
 	float specularExponent = 100.f;
 	
