@@ -11,39 +11,36 @@ Player::Player(glm::vec3 startPos)
 
 void Player::tick(float delta, ButtonMap bm)
 {
-	move(bm);
+	move(bm, delta);
 }
 
-void Player::move(ButtonMap bm)
+void Player::move(ButtonMap bm, float delta)
 {
 	float halfPi = (float)(M_PI / 2.f);
 
-	if (bm.W && pitch < halfPi - 0.02f)
-		pitch += 0.02f;
+	float pitchDiff = kPitchSpeed * delta;
+	if (bm.W && pitch < halfPi - pitchDiff)
+		pitch += pitchDiff;
 
-	if (bm.S && pitch > -halfPi + 0.02f)
-		pitch -= 0.02f;
+	if (bm.S && pitch > -halfPi + pitchDiff)
+		pitch -= pitchDiff;
 
+	float yawDiff = kYawSpeed * delta;
 	if (bm.A)
-	{
-		yaw += 0.02f;
-	}
+		yaw += yawDiff;
 
 	if (bm.D)
-	{
-		yaw -= 0.02f;
-	}
+		yaw -= yawDiff;
 
-	glm::vec3 movement = glm::vec3(glm::sin(yaw), glm::sin(pitch), cos(yaw)) * 2.f;
+	glm::vec3 movement = glm::vec3(glm::sin(yaw), glm::sin(pitch), cos(yaw));
 
 	if (bm.Space)
-	{
+		movement = glm::vec3(0.f);
+
+	/*if (bm.Space)
 		movement.y += 1.f;
-	}
 	else if (bm.Ctrl)
-	{
-		movement.y -= 1.f;
-	}
+		movement.y -= 1.f;*/
 
 	/*
 	if (bm.W) {
@@ -62,7 +59,7 @@ void Player::move(ButtonMap bm)
 		movement.y += 0.01f;
 	}*/
 
-	position += movement * 0.02f;
+	position += movement * moveSpeed * delta;
 }
 
 void Player::draw(glm::mat4 mvp)
