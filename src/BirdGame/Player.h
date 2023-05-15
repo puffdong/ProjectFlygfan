@@ -12,6 +12,7 @@ class Player
 private:
 	ModelObject model;
 	Shader *shader;
+	Texture texture;
 	const float kMoveSpeed = 1.f;
 	const float kPitchSpeed = 1.f;
 	const float kYawSpeed = 1.f;

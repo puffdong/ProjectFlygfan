@@ -38,28 +38,6 @@ void Player::move(ButtonMap bm, float delta)
 	if (bm.Space)
 		movement = glm::vec3(0.f);
 
-	/*if (bm.Space)
-		movement.y += 1.f;
-	else if (bm.Ctrl)
-		movement.y -= 1.f;*/
-
-	/*
-	if (bm.W) {
-		movement.x += 0.01f;
-	}
-	if (bm.A) {
-		movement.z += 0.01f;
-	}
-	if (bm.S) {
-		movement.x -= 0.01f;
-	}
-	if (bm.D) {
-		movement.z -= 0.01f;
-	}
-	if (bm.Space) {
-		movement.y += 0.01f;
-	}*/
-
 	position += movement * kMoveSpeed * delta;
 }
 
@@ -87,7 +65,7 @@ glm::vec3 Player::getPosition()
 }
 
 glm::mat4 Player::getModelMatrix() {
-	return glm::translate(glm::mat4(1.f), position) * glm::rotate(glm::mat4(1.f), yaw, glm::vec3(0.f, 1.f, 0.f)) 
+	return glm::translate(glm::mat4(1.f), position) * glm::rotate(glm::mat4(1.f), yaw, glm::vec3(0.f, 1.f, 0.f)) * glm::rotate(glm::mat4(1.f), -pitch, glm::vec3(1.f, 0.f, 0.f))
 		* glm::scale(glm::mat4(1.f), glm::vec3(7.f));
 }
 
