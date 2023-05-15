@@ -5,8 +5,7 @@ Space::Space()
 
 	player = new Player(glm::vec3(0.f, 0.f, 0.f));
 
-	glm::vec3 cameraTarget(0.f, 0.f, -2.f);
-	glm::vec3 cameraDir(0.f, 0.f, 2.f);
+	glm::vec3 cameraDir(0.f, 0.f, 1.f);
 	camera = new Camera(cameraDir, player);
 
 	// coin stuff
@@ -54,25 +53,10 @@ void Space::renderWorld()
 	glm::mat4 viewMatrix = camera->getLookAt();
 	skybox->draw(proj, camera);
 
+	//groundObject->draw(proj, viewMatrix, groundObject->getModelMatrix());
+
 	for (WorldObject *o : wObjects)
 	{
-		// glm::mat4 mvp = proj * viewMatrix * o->getModelMatrix();
-		Shader *shader = o->getShader();
-		shader->Bind();
-
-		//std::vector<glm::vec3> lightColors;
-		//std::vector<glm::vec3> lightDirs;
-		//std::vector<int> isDirectional;
-		//for (LightSource &light : lightSources)
-		//{
-		//	lightColors.push_back(light.color);
-		//	lightDirs.push_back(light.dir);
-		//	isDirectional.push_back((int)light.isDirectional);
-		//}
-		//shader->SetUniform1i("numLights", lightSources.size());
-		//shader->SetUniform3fv("lightColors", lightColors);
-		//shader->SetUniform3fv("lightDirs", lightDirs);
-		//shader->SetUniform1iv("isDirectional", isDirectional);
 		o->draw(proj, viewMatrix, o->getModelMatrix());
 	}
 	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), player->getPosition());
@@ -92,7 +76,8 @@ void Space::loadLevel1()
 	skybox = new Skybox(
 		std::string("res/models/labskybox.obj"),
 		std::string("res/shaders/Skybox.shader"),
-		std::string("res/textures/labskybox512.tga"));
+		std::string("res/textures/labskybox512.tga")
+	);
 	player->setPosition(glm::vec3(0.f, 1.f, 0.f));
 
 	// Setup shader with lighting
@@ -120,12 +105,16 @@ void Space::loadLevel1()
 	// load all the world objects and set up the world
 	ModelObject *m1 = new ModelObject(10.f, 10.f);
 	WorldObject *obj1 = new WorldObject(shader, m1, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 0.f));
+	//wObjects.push_back(obj1);
 
-	wObjects.push_back(obj1);
+	groundTexture = new Texture("res/textures/fft-terrain.tga");
+	groundModel = new ModelObject(100.f, 100.f, 20.f, &groundTexture->tgaData);
+	groundObject = new WorldObject(shader, groundModel, glm::vec3(0.f, -10.f, 0.f), glm::vec3(0.f));
+	wObjects.push_back(groundObject);
 
 	std::string testString = "res/models/teapot.obj";
 
-	WorldObject *testobject = new WorldObject(shader, testString, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0));
+	WorldObject *testobject = new WorldObject(shader, testString, glm::vec3(-10.f, 0.f, 0.f), glm::vec3(0.f));
 	wObjects.push_back(testobject);
 
 	setUpCoinsLevel1();

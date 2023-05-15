@@ -11,10 +11,12 @@ class Player
 {
 private:
 	ModelObject model;
-	Shader* shader;
-	Texture texture;
+	Shader *shader;
+	const float kMoveSpeed = 1.f;
+	const float kPitchSpeed = 1.f;
+	const float kYawSpeed = 1.f;
 
-	void move(ButtonMap bm);
+	void move(ButtonMap bm, float delta);
 
 public:
 	glm::vec3 position;

@@ -34,7 +34,6 @@ uniform int numLights;
 uniform vec3 lightColors[10];
 uniform vec3 lightDirs[10];
 uniform bool isDirectional[10];
-uniform float specularExponent;
 
 void main()
 {
@@ -71,7 +70,6 @@ void main()
 		result_color = result_color + lightColor * spec * specularStrength ;
 	}
 
-	color = vec4(result_color, 1.0); 
-	//vec4 texColor = texture(u_Texture, v_texCoord);
-	//color = texColor * u_Color;
+	//color = texture(u_Texture, v_texCoord) * vec4(result_color, 1.0);
+	color = vec4(result_color, 1.0);
 };

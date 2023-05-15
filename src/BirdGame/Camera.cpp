@@ -8,7 +8,6 @@ Camera::Camera(glm::vec3 front, Player *p)
 	mPitch = 0.f;
 	pPlayerYaw = p->getYaw();
 	mYaw = acos(glm::dot(mDir, mUp) / (glm::length(mUp) * glm::length(mDir)));
-	mYaw -= (float)(M_PI / 2.f);
 	updateTargetPos();
 }
 
@@ -26,7 +25,7 @@ glm::mat4 Camera::getLookAt()
 	dir.z = sin(mYaw - pPlayerYaw) * cos(mPitch);
 	mDir = glm::normalize(dir);
 
-	return glm::lookAt(player->getPosition() - mDir * kTargetDistance, mTargetPos, mUp);
+	return glm::lookAt(mTargetPos - mDir * kTargetDistance, mTargetPos, mUp);
 }
 
 glm::vec3 Camera::getPosition()

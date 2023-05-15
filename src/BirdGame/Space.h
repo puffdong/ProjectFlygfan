@@ -29,6 +29,7 @@ private:
 
 	Skybox* skybox;
 	
+	
 public:
 	Space();
 
@@ -43,6 +44,10 @@ private:
 	// Coin logic
 	ModelObject* coinModel; // Use the same model data for every coin
 	Shader* coinShader;
+	Texture* groundTexture;
+	ModelObject* groundModel;
+	WorldObject* groundObject;
+
 	std::vector<Coin*> coins;
 
 	void addCoin(glm::vec3 pos);

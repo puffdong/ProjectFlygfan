@@ -1,7 +1,7 @@
 #pragma once
 #include <GL/glew.h>
-
 #include <string>
+#include "LoadTGA.h"
 
 class ModelObject {
 private:
@@ -16,6 +16,7 @@ public:
 
 	ModelObject(const std::string& filepath);
 	ModelObject(float widht, float depth);
+	ModelObject(float width, float depth, float height, TextureData* mapTexture);
 	~ModelObject();
 	void loadThroughTiny(const std::string& filepath);
 
@@ -24,4 +25,5 @@ public:
 	void Bind() const;
 	void Unbind() const;
 	void createFlatGround(float width, float depth);
+	void createHeightmap(float width, float depth, float height, TextureData* mapTexture);
 };
