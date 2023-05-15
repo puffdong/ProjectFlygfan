@@ -53,6 +53,8 @@ void Space::renderWorld()
 	glm::mat4 viewMatrix = camera->getLookAt();
 	skybox->draw(proj, camera);
 
+	//groundObject->draw(proj, viewMatrix, groundObject->getModelMatrix());
+
 	for (WorldObject *o : wObjects)
 	{
 		o->draw(proj, viewMatrix, o->getModelMatrix());
@@ -75,14 +77,15 @@ void Space::loadLevel1()
 	skybox = new Skybox(
 		std::string("res/models/labskybox.obj"),
 		std::string("res/shaders/Skybox.shader"),
-		std::string("res/textures/labskybox512.tga"));
+		std::string("res/textures/labskybox512.tga")
+	);
 	player->setPosition(glm::vec3(0.f, 1.f, 0.f));
 
 	// Setup shader with lighting
 	Shader *shader = new Shader("res/shaders/WorldObject.shader");
 	LightSource newLightSources[] = {
-		LightSource(glm::vec3(0.f, 0.f, 1.f), glm::vec3(1.f, 0.f, 0.f), true),
-		LightSource(glm::vec3(1.f, 0.f, 0.f), glm::vec3(-1.f, 0.f, 0.f), true)
+		LightSource(glm::vec3(0.f, 0.f, 1.f), glm::vec3(1.f, 1.f, 0.f), true),
+		LightSource(glm::vec3(1.f, 0.f, 0.f), glm::vec3(-1.f, 1.f, 0.f), true)
 	};
 
 	std::vector<glm::vec3> lightColors;
@@ -103,12 +106,16 @@ void Space::loadLevel1()
 	// load all the world objects and set up the world
 	ModelObject *m1 = new ModelObject(10.f, 10.f);
 	WorldObject *obj1 = new WorldObject(shader, m1, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 0.f));
+	//wObjects.push_back(obj1);
 
-	wObjects.push_back(obj1);
+	groundTexture = new Texture("res/textures/fft-terrain.tga");
+	groundModel = new ModelObject(100.f, 100.f, 20.f, &groundTexture->tgaData);
+	groundObject = new WorldObject(shader, groundModel, glm::vec3(0.f, -10.f, 0.f), glm::vec3(0.f));
+	wObjects.push_back(groundObject);
 
 	std::string testString = "res/models/teapot.obj";
 
-	WorldObject *testobject = new WorldObject(shader, testString, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0));
+	WorldObject *testobject = new WorldObject(shader, testString, glm::vec3(-10.f, 0.f, 0.f), glm::vec3(0.f));
 	wObjects.push_back(testobject);
 
 	setUpCoinsLevel1();

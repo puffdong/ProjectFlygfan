@@ -9,9 +9,9 @@ private:
 	unsigned int m_RendererID;
 	std::string m_FilePath;
 	int m_Width, m_Height, m_BPP;
-	TextureData tgaData;
 
 public: 
+	TextureData tgaData;
 	Texture(const std::string& path);
 	~Texture();
 

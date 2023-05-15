@@ -5,8 +5,8 @@
 #include "Camera.h"
 
 struct Skybox {
-	ModelObject model;
-	Shader shader;
+	ModelObject* model;
+	Shader* shader;
 	Texture texture;
 
 	Skybox(const std::string& modelPath,const std::string& shaderPath, const std::string& texturePath);
