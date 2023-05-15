@@ -5,8 +5,7 @@ Space::Space()
 
 	player = new Player(glm::vec3(0.f, 0.f, 0.f));
 
-	glm::vec3 cameraTarget(0.f, 0.f, -2.f);
-	glm::vec3 cameraDir(0.f, 0.f, 2.f);
+	glm::vec3 cameraDir(0.f, 0.f, 1.f);
 	camera = new Camera(cameraDir, player);
 
 	// coin stuff
@@ -56,23 +55,6 @@ void Space::renderWorld()
 
 	for (WorldObject *o : wObjects)
 	{
-		// glm::mat4 mvp = proj * viewMatrix * o->getModelMatrix();
-		Shader *shader = o->getShader();
-		shader->Bind();
-
-		//std::vector<glm::vec3> lightColors;
-		//std::vector<glm::vec3> lightDirs;
-		//std::vector<int> isDirectional;
-		//for (LightSource &light : lightSources)
-		//{
-		//	lightColors.push_back(light.color);
-		//	lightDirs.push_back(light.dir);
-		//	isDirectional.push_back((int)light.isDirectional);
-		//}
-		//shader->SetUniform1i("numLights", lightSources.size());
-		//shader->SetUniform3fv("lightColors", lightColors);
-		//shader->SetUniform3fv("lightDirs", lightDirs);
-		//shader->SetUniform1iv("isDirectional", isDirectional);
 		o->draw(proj, viewMatrix, o->getModelMatrix());
 	}
 	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), player->getPosition());

@@ -34,7 +34,6 @@ uniform int numLights;
 uniform vec3 lightColors[10];
 uniform vec3 lightDirs[10];
 uniform bool isDirectional[10];
-uniform float specularExponent;
 
 void main()
 {

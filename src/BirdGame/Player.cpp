@@ -1,4 +1,6 @@
+#define _USE_MATH_DEFINES
 #include "Player.h"
+#include <math.h>
 
 Player::Player(glm::vec3 startPos)
 	: model("res/models/lowpolybird.obj"), position(startPos), velocity(0.f, 0.f, 0.f),
@@ -14,12 +16,13 @@ void Player::tick(float delta, ButtonMap bm)
 
 void Player::move(ButtonMap bm)
 {
-	glm::vec3 movement = glm::vec3(0.f, 0.f, 0.f);
+	float halfPi = (float)(M_PI / 2.f);
 
-	if (bm.W)
-	{
-		movement = glm::vec3(glm::sin(yaw), 0, cos(yaw)) * 2.f;
-	}
+	if (bm.W && pitch < halfPi - 0.02f)
+		pitch += 0.02f;
+
+	if (bm.S && pitch > -halfPi + 0.02f)
+		pitch -= 0.02f;
 
 	if (bm.A)
 	{
@@ -30,6 +33,9 @@ void Player::move(ButtonMap bm)
 	{
 		yaw -= 0.02f;
 	}
+
+	glm::vec3 movement = glm::vec3(glm::sin(yaw), glm::sin(pitch), cos(yaw)) * 2.f;
+
 	if (bm.Space)
 	{
 		movement.y += 1.f;
@@ -37,10 +43,6 @@ void Player::move(ButtonMap bm)
 	else if (bm.Ctrl)
 	{
 		movement.y -= 1.f;
-	}
-	else
-	{
-		movement.y -= 0.04f;
 	}
 
 	/*

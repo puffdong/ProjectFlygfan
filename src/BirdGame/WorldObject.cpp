@@ -20,7 +20,6 @@ void WorldObject::draw(glm::mat4 projMatrix, glm::mat4 worldMatrix, glm::mat4 mo
 	shader->SetUniformMat4("u_MVP", projMatrix * worldMatrix * modelMatrix);
 	shader->SetUniformMat4("modelMatrix", modelMatrix);
 	shader->SetUniformMat4("worldMatrix", worldMatrix);
-	shader->SetUniform1f("specularExponent", specularExponent);
 	model->render();
 }
 
