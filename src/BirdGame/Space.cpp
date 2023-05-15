@@ -45,7 +45,7 @@ void Space::tick(float delta, ButtonMap bm)
 		camera->zoomOut(0.1f);
 	}
 	else {
-		std::cout << "Timer: " << zoomOutTimer << std::endl;
+		//std::cout << "Timer: " << zoomOutTimer << std::endl;
 		zoomOutTimer -= delta;
 	}
 
@@ -105,9 +105,9 @@ void Space::renderWorld()
 void Space::loadLevel1()
 {
 	skybox = new Skybox(
-		std::string("res/models/labskybox.obj"),
+		std::string("res/models/skybox-full-tweaked.obj"),
 		std::string("res/shaders/Skybox.shader"),
-		std::string("res/textures/labskybox512.tga")
+		std::string("res/textures/skybox/cloud-landscape.tga")
 	);
 
 	playerStartPos = glm::vec3(10.f, 10.f, 0.f);
@@ -142,7 +142,7 @@ void Space::loadLevel1()
 	glm::vec3 groundDims(100.f, 20.f, 100.f);
 	glm::mat4 groundTrans = glm::translate(glm::mat4(1.f), glm::vec3(0.f));
 	ground = new Ground(
-		groundDims, groundTrans, "res/textures/fft-terrain.tga", worldShader, "res/textures/grass.tga"
+		groundDims, groundTrans, "res/textures/terrain/fft-terrain.tga", worldShader, "res/textures/grass.tga"
 	);
 
 	setUpCoinsLevel1();
