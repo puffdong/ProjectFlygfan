@@ -59,7 +59,7 @@ void Player::move(ButtonMap bm, float delta)
 		movement.y += 0.01f;
 	}*/
 
-	position += movement * moveSpeed * delta;
+	position += movement * kMoveSpeed * delta;
 }
 
 void Player::draw(glm::mat4 mvp)
