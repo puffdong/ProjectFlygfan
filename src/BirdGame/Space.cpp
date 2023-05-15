@@ -1,7 +1,6 @@
 #include "Space.h"
 
 
-
 Space::Space() {
 	LightSource newLightSources[] = {
 		LightSource(glm::vec3(0.f, 0.f, 1.f), glm::vec3(1.f, 0.f, 0.f), true),
@@ -89,6 +88,11 @@ void Space::renderWorld() {
 }
 
 void Space::loadLevel1() {
+	skybox = new Skybox(
+		std::string("res/models/labskybox.obj"),
+		std::string("res/shaders/Skybox.shader"),
+		std::string("res/textures/labskybox512.tga")
+	);
 	player->setPosition(glm::vec3(0.f, 1.f, 0.f));
 
 	// load all the world objects and set up the world

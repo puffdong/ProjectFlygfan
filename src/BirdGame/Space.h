@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../OBJLoader.h"
+#include "../Texture.h"
 
 #include "glm/glm.hpp"
 #include <vector>
@@ -8,6 +9,7 @@
 #include "Coin.h"
 #include "Player.h"
 #include "WorldObject.h"
+#include "Skybox.h"
 
 #include "Camera.h"
 
@@ -18,7 +20,6 @@ class Space {
 private:
 	Player* player;
 	Camera* camera;
-	
 
 	std::vector<WorldObject*> wObjects;
 
@@ -26,6 +27,7 @@ private:
 
 	std::vector<LightSource> lightSources;
 	std::vector<int> isDirectional;
+	Skybox* skybox;
 	
 public:
 	Space();

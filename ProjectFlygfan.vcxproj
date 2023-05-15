@@ -138,6 +138,7 @@
     <ClCompile Include="src\BirdGame\Camera.cpp" />
     <ClCompile Include="src\BirdGame\Coin.cpp" />
     <ClCompile Include="src\BirdGame\Player.cpp" />
+    <ClCompile Include="src\BirdGame\Skybox.cpp" />
     <ClCompile Include="src\BirdGame\Space.cpp" />
     <ClCompile Include="src\BirdGame\WorldObject.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
@@ -307,6 +308,7 @@
     <None Include="res\shaders\Basic.shader" />
     <None Include="res\shaders\Coin.shader" />
     <None Include="res\shaders\Player.shader" />
+    <None Include="res\shaders\Skybox.shader" />
     <None Include="res\shaders\WorldObject.shader" />
   </ItemGroup>
   <ItemGroup>
@@ -606,6 +608,7 @@
     <ClInclude Include="src\BirdGame\Space.h" />
     <ClInclude Include="src\BirdGame\Utility\ButtonMap.h" />
     <ClInclude Include="src\BirdGame\Utility\LightSource.h" />
+    <ClInclude Include="src\BirdGame\Skybox.h" />
     <ClInclude Include="src\BirdGame\WorldLight.h" />
     <ClInclude Include="src\BirdGame\WorldObject.h" />
     <ClInclude Include="src\IndexBuffer.h" />
