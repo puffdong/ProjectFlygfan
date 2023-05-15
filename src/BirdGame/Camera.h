@@ -25,5 +25,6 @@ public:
 	glm::vec3 getPosition();
 	void rotate(float pitchDiff, float yawDiff);
 	void updateTargetPos();
+	void tick(float delta, ButtonMap bm);
 	std::string toString();
 };

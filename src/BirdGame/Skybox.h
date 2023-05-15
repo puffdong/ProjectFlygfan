@@ -7,7 +7,7 @@
 struct Skybox {
 	ModelObject* model;
 	Shader* shader;
-	Texture texture;
+	Texture* texture;
 
 	Skybox(const std::string& modelPath,const std::string& shaderPath, const std::string& texturePath);
 

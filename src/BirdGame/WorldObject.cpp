@@ -1,6 +1,6 @@
 #include "WorldObject.h"
 
-WorldObject::WorldObject(Shader* s, std::string& modelPath, glm::vec3 pos, glm::vec3 rot) 
+WorldObject::WorldObject(Shader* s, const std::string& modelPath, glm::vec3 pos, glm::vec3 rot) 
 {
 	model = new ModelObject(modelPath);
 	shader = s;

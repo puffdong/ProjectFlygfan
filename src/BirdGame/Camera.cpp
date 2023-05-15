@@ -33,6 +33,30 @@ glm::vec3 Camera::getPosition()
 	return mTargetPos - mDir * kTargetDistance;
 }
 
+void Camera::tick(float delta, ButtonMap bm)
+{
+	updateTargetPos();
+
+	int pitchDir = 0;
+	int yawDir = 0;
+
+	if (bm.Up)
+		pitchDir -= 1;
+	if (bm.Down)
+		pitchDir += 1;
+	if (bm.Left)
+		yawDir += 1;
+	if (bm.Right)
+		yawDir -= 1;
+
+	if (pitchDir != 0 || yawDir != 0) {
+		rotate(
+			(float)pitchDir * kSensitivity * delta, 
+			(float)yawDir * kSensitivity * delta
+		);
+	}
+}
+
 void Camera::rotate(float pitchDiff, float yawDiff)
 {
 	pPlayerYaw = player->getYaw();
