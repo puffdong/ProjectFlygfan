@@ -21,6 +21,8 @@ class Space {
 private:
 	Player* player;
 	Camera* camera;
+	Skybox* skybox;
+	glm::vec3 playerStartPos;
 
 	std::vector<WorldObject*> wObjects;
 
@@ -28,11 +30,12 @@ private:
 	
 	glm::mat4 proj = glm::perspective(glm::radians(70.f), 16.f / 9.0f, 1.0f, 256.0f);
 
-	Skybox* skybox;
-	
+	float zoomOutTimer = -1.f;
 	
 public:
 	Space();
+
+	void resetPlayer();
 
 	void tick(float delta, ButtonMap bm);
 

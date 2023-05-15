@@ -31,7 +31,7 @@ float Ground::calcHeight(float x, float z) {
 	glm::vec3 pos = glm::vec3(mTranslation * glm::vec4(x, 0, z, 1.f));
 
     if (x < 0 || z < 0) {
-        return -1.0F;
+        return -1.f;
     }
     int mapWidth = mapTexture->GetWidth();
     int mapDepth = mapTexture->GetHeight();
@@ -64,7 +64,7 @@ float Ground::calcHeight(float x, float z) {
     if (xIndex == -1 || zIndex == -1)
     {
         printf("calcHeight: Coords not found");
-        return -1.0f;
+        return -1.f;
     }
 
     glm::vec3 p1 = vertexArray[(xIndex - 1 + (zIndex * mapWidth))];
