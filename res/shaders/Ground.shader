@@ -34,7 +34,6 @@ uniform int numLights;
 uniform vec3 lightColors[10];
 uniform vec3 lightDirs[10];
 uniform bool isDirectional[10];
-uniform float textureScale;
 
 void main()
 {
@@ -54,7 +53,8 @@ void main()
 		vec3 lightDir;
 		if (isDirectional[i]) {
 			lightDir = normalize(mat3(worldMatrix) * lightDirs[i]);
-		} else {
+		}
+		else {
 			vec3 lightPosition = vec3(worldMatrix * vec4(lightDirs[i], 1.0));
 			lightDir = normalize(lightPosition - surfacePos);
 		}
@@ -66,12 +66,11 @@ void main()
 		result_color = result_color + lightColor * shade * diffuseStrength;
 
 		// Specular lighting
-		vec3 reflectDir = reflect(-lightDir, norm);  
+		vec3 reflectDir = reflect(-lightDir, norm);
 		float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
-		result_color = result_color + lightColor * spec * specularStrength ;
+		result_color = result_color + lightColor * spec * specularStrength;
 	}
 
-	color = texture(u_Texture, v_texCoord * textureScale) * vec4(result_color, 1.0);
-	//color = texture(u_Texture, v_texCoord * 100) * vec4(result_color, 1.0);
+	color = texture(u_Texture, v_texCoord * 256 * 0.01) * vec4(result_color, 1.0);
 	//color = vec4(result_color, 1.0);
 };

@@ -116,8 +116,8 @@ void Space::loadLevel1()
 	// Setup shader with lighting
 	Shader *worldShader = new Shader("res/shaders/WorldObject.shader");
 	LightSource newLightSources[] = {
-		LightSource(glm::vec3(0.f, 0.f, 1.f), glm::vec3(1.f, 1.f, 0.f), true),
-		LightSource(glm::vec3(1.f, 0.f, 0.f), glm::vec3(-1.f, 0.f, 0.f), true)
+//		LightSource(glm::vec3(0.f, 0.5f, 0.f), glm::vec3(-1.f, 0.f, 0.f), true),
+		LightSource(glm::vec3(1.f, 1.f, 1.f), glm::vec3(1.f, 1.f, 0.f), true)
 	};
 
 	std::vector<glm::vec3> lightColors;
@@ -139,6 +139,12 @@ void Space::loadLevel1()
 	WorldObject *teapotObject = new WorldObject(worldShader, "res/models/teapot.obj", glm::vec3(-10.f, 0.f, 0.f), glm::vec3(0.f));
 	wObjects.push_back(teapotObject);
 
+	/*Shader* groundShader = new Shader("res/shader/Ground.shader");
+	groundShader->Bind();
+	groundShader->SetUniform1i("numLights", lightColors.size());
+	groundShader->SetUniform3fv("lightColors", lightColors);
+	groundShader->SetUniform3fv("lightDirs", lightDirs);
+	groundShader->SetUniform1iv("isDirectional", isDirectional);*/
 	glm::vec3 groundDims(100.f, 20.f, 100.f);
 	glm::mat4 groundTrans = glm::translate(glm::mat4(1.f), glm::vec3(0.f));
 	ground = new Ground(
