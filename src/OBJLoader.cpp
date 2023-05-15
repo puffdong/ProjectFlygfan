@@ -2,7 +2,6 @@
 #include "OBJloader.h"
 #include "Renderer.h"
 #include "tiny_obj_loader.h"
-#include <vector>
 #include <iostream>
 #include <unordered_map>
 #include <tuple>
@@ -390,4 +389,7 @@ void ModelObject::createHeightmap(float width, float depth, float height, Textur
     m_VBO = VBO;
     m_EBO = EBO;
     m_indexCount = static_cast<GLsizei>(indexArray.size());
+    m_vertexArray = vertexArray;
+    m_normalArray = normalArray;
+    m_texCoordArray = texCoordArray;
 }

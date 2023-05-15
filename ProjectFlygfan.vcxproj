@@ -134,6 +134,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\glm\detail\glm.cpp" />
+    <ClCompile Include="src\BirdGame\Ground.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\BirdGame\Camera.cpp" />
     <ClCompile Include="src\BirdGame\Coin.cpp" />
@@ -599,6 +600,7 @@
     <ClInclude Include="Dependencies\glm\vec3.hpp" />
     <ClInclude Include="Dependencies\glm\vec4.hpp" />
     <ClInclude Include="Dependencies\glm\vector_relational.hpp" />
+    <ClInclude Include="src\BirdGame\Ground.h" />
     <ClInclude Include="src\BirdGame\Camera.h" />
     <ClInclude Include="src\BirdGame\Coin.h" />
     <ClInclude Include="src\BirdGame\Player.h" />

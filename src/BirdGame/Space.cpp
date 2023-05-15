@@ -1,4 +1,5 @@
 #include "Space.h"
+#include <iostream>
 
 Space::Space()
 {
@@ -18,24 +19,10 @@ Space::Space()
 void Space::tick(float delta, ButtonMap bm)
 {
 	player->tick(delta, bm);
-	camera->updateTargetPos();
-	float pitch = 0.0f;
-	float yaw = 0.0f;
+	camera->tick(delta, bm);
 
-	if (bm.Up) {
-		pitch -= 0.01f;
-	}
-	if (bm.Down) {
-		pitch += 0.01f;
-	}
-	if (bm.Left) {
-		yaw += 0.01f;
-	}
-	if (bm.Right) {
-		yaw -= 0.01f;
-	}
-
-	camera->rotate(pitch, yaw);
+	glm::vec3 playerPos = player->getPosition();
+	//std::cout << "Distance to ground: " << playerPos.y - ground->calcHeight(playerPos.x, playerPos.z) << std::endl;
 
 	std::vector<Coin*> coinDeletionQueue;
 
@@ -62,25 +49,22 @@ void Space::tick(float delta, ButtonMap bm)
 
 void Space::renderWorld()
 {
-
 	glm::mat4 viewMatrix = camera->getLookAt();
 	skybox->draw(proj, camera);
 
-	//groundObject->draw(proj, viewMatrix, groundObject->getModelMatrix());
+	ground->draw(proj, viewMatrix);
 
 	for (WorldObject *o : wObjects)
 	{
 		o->draw(proj, viewMatrix, o->getModelMatrix());
 	}
-	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), player->getPosition());
-	glm::mat4 mvp = proj * camera->getLookAt() * modelMatrix;
 
 	for (Coin *c : coins)
 	{
 		c->draw(proj, viewMatrix, c->getModelMatrix());
 	}
 
-	player->draw(proj, camera->getLookAt(), player->getModelMatrix());
+	player->draw(proj, viewMatrix, player->getModelMatrix());
 }
 
 void Space::loadLevel1()
@@ -93,7 +77,7 @@ void Space::loadLevel1()
 	player->setPosition(glm::vec3(10.f, 10.f, 0.f));
 
 	// Setup shader with lighting
-	Shader *shader = new Shader("res/shaders/WorldObject.shader");
+	Shader *worldShader = new Shader("res/shaders/WorldObject.shader");
 	LightSource newLightSources[] = {
 		LightSource(glm::vec3(0.f, 0.f, 1.f), glm::vec3(1.f, 1.f, 0.f), true),
 		LightSource(glm::vec3(1.f, 0.f, 0.f), glm::vec3(-1.f, 0.f, 0.f), true)
@@ -108,26 +92,21 @@ void Space::loadLevel1()
 		lightDirs.push_back(light.dir);
 		isDirectional.push_back((int)light.isDirectional);
 	}
-	shader->Bind();
-	shader->SetUniform1i("numLights", lightColors.size());
-	shader->SetUniform3fv("lightColors", lightColors);
-	shader->SetUniform3fv("lightDirs", lightDirs);
-	shader->SetUniform1iv("isDirectional", isDirectional);
+	worldShader->Bind();
+	worldShader->SetUniform1i("numLights", lightColors.size());
+	worldShader->SetUniform3fv("lightColors", lightColors);
+	worldShader->SetUniform3fv("lightDirs", lightDirs);
+	worldShader->SetUniform1iv("isDirectional", isDirectional);
 
 	// load all the world objects and set up the world
-	ModelObject *m1 = new ModelObject(10.f, 10.f);
-	WorldObject *obj1 = new WorldObject(shader, m1, glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 0.f));
-	//wObjects.push_back(obj1);
+	WorldObject *teapotObject = new WorldObject(worldShader, "res/models/teapot.obj", glm::vec3(-10.f, 0.f, 0.f), glm::vec3(0.f));
+	wObjects.push_back(teapotObject);
 
-	groundTexture = new Texture("res/textures/fft-terrain.tga");
-	groundModel = new ModelObject(100.f, 100.f, 20.f, &groundTexture->tgaData);
-	groundObject = new WorldObject(shader, groundModel, glm::vec3(0.f, -10.f, 0.f), glm::vec3(0.f));
-	wObjects.push_back(groundObject);
-
-	std::string testString = "res/models/teapot.obj";
-
-	WorldObject *testobject = new WorldObject(shader, testString, glm::vec3(-10.f, 0.f, 0.f), glm::vec3(0.f));
-	wObjects.push_back(testobject);
+	glm::vec3 groundDims(100.f, 20.f, 100.f);
+	glm::mat4 groundTrans = glm::translate(glm::mat4(1.f), glm::vec3(0.f));
+	ground = new Ground(
+		groundDims, groundTrans, "res/textures/fft-terrain.tga", worldShader, "res/textures/grass.tga"
+	);
 
 	setUpCoinsLevel1();
 }

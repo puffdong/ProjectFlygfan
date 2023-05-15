@@ -6,12 +6,13 @@
 #include "glm/glm.hpp"
 #include <vector>
 
+#include "Camera.h"
 #include "Coin.h"
 #include "Player.h"
 #include "WorldObject.h"
 #include "Skybox.h"
+#include "Ground.h"
 
-#include "Camera.h"
 
 #include "Utility/ButtonMap.h"
 #include "Utility/LightSource.h"
@@ -44,9 +45,7 @@ private:
 	// Coin logic
 	ModelObject* coinModel; // Use the same model data for every coin
 	Shader* coinShader;
-	Texture* groundTexture;
-	ModelObject* groundModel;
-	WorldObject* groundObject;
+	Ground* ground;
 
 	std::vector<Coin*> coins;
 

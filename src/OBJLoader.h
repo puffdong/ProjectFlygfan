@@ -1,6 +1,8 @@
 #pragma once
 #include <GL/glew.h>
 #include <string>
+#include <vector>
+#include "glm/glm.hpp"
 #include "LoadTGA.h"
 
 class ModelObject {
@@ -10,6 +12,9 @@ private:
 	GLuint m_VBO;
 	GLuint m_EBO;
 	GLsizei m_indexCount;
+	std::vector<glm::vec3> m_vertexArray;
+	std::vector<glm::vec3> m_normalArray;
+	std::vector<glm::vec2> m_texCoordArray;
 
 public:
 	unsigned int numIndices;
@@ -26,4 +31,7 @@ public:
 	void Unbind() const;
 	void createFlatGround(float width, float depth);
 	void createHeightmap(float width, float depth, float height, TextureData* mapTexture);
+	std::vector<glm::vec3> getVertexArray() { return m_vertexArray; }
+	std::vector<glm::vec3> getNormalArray() { return m_normalArray; }
+	std::vector<glm::vec2> getTexCoordArray() { return m_texCoordArray; }
 };
