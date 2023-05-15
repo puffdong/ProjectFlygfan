@@ -10,10 +10,6 @@
 
 
 #include "Renderer.h"
-#include "VertexBufferLayout.h"
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
-#include "VertexArray.h"
 #include "Shader.h"
 #include "Texture.h"
 
@@ -150,10 +146,6 @@ int main(void)
     texture.Bind();
 
     space = new Space();
-
-   
-
-    //glEnable(GL_CULL_FACE);
     
     float lastTime = glfwGetTime();
 
@@ -168,31 +160,7 @@ int main(void)
         lastTime = currentTime;
 
         renderer.Clear();
-        /* player->tick(0, bm);
-        camera->updateTargetPos();
-        camera->rotate(0.f, 0.01f);
 
-        
-        
-        s.Bind();
-        s.SetUniform4f("u_Color", r, 1.0f, 0.8f, 1.0f);
-        modelMatrix = glm::translate(glm::mat4(1.0f), player->getPosition());
-        std::cout << player->getPosition().x  << std::endl;
-        mvp = proj * camera->getLookAt() * modelMatrix;
-        s.SetUniformMat4("u_MVP", mvp);
-
-        objey.render();
-        //renderer.Draw(va, ib, s);
-
-        if (r > 1.0f) {
-            increment = -0.05f;
-        }
-        else if (r < 0.0f) {
-            increment = 0.05f;
-        }
-
-        r += increment;
-        */
         space->tick(deltaTime, bm);
         space->renderWorld();
 

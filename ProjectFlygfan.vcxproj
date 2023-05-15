@@ -141,14 +141,11 @@
     <ClCompile Include="src\BirdGame\Skybox.cpp" />
     <ClCompile Include="src\BirdGame\Space.cpp" />
     <ClCompile Include="src\BirdGame\WorldObject.cpp" />
-    <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\LoadTGA.cpp" />
     <ClCompile Include="src\OBJLoader.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Texture.cpp" />
-    <ClCompile Include="src\VertexArray.cpp" />
-    <ClCompile Include="src\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Users\simon\Downloads\imgui-1.89.5\imgui-1.89.5\examples\example_emscripten_wgpu\web\index.html" />
@@ -609,18 +606,13 @@
     <ClInclude Include="src\BirdGame\Utility\ButtonMap.h" />
     <ClInclude Include="src\BirdGame\Utility\LightSource.h" />
     <ClInclude Include="src\BirdGame\Skybox.h" />
-    <ClInclude Include="src\BirdGame\WorldLight.h" />
     <ClInclude Include="src\BirdGame\WorldObject.h" />
-    <ClInclude Include="src\IndexBuffer.h" />
     <ClInclude Include="src\LoadTGA.h" />
     <ClInclude Include="src\OBJLoader.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\Texture.h" />
     <ClInclude Include="src\tiny_obj_loader.h" />
-    <ClInclude Include="src\VertexArray.h" />
-    <ClInclude Include="src\VertexBuffer.h" />
-    <ClInclude Include="src\VertexBufferLayout.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
