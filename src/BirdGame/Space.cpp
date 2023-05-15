@@ -22,28 +22,41 @@ void Space::tick(float delta, ButtonMap bm)
 	float pitch = 0.0f;
 	float yaw = 0.0f;
 
-	if (bm.Up)
-	{
+	if (bm.Up) {
 		pitch -= 0.01f;
 	}
-	if (bm.Down)
-	{
+	if (bm.Down) {
 		pitch += 0.01f;
 	}
-	if (bm.Left)
-	{
+	if (bm.Left) {
 		yaw += 0.01f;
 	}
-	if (bm.Right)
-	{
+	if (bm.Right) {
 		yaw -= 0.01f;
 	}
 
 	camera->rotate(pitch, yaw);
 
-	for (Coin *c : coins)
-	{
+	std::vector<Coin*> coinDeletionQueue;
+
+	for (Coin *c : coins) {
 		c->tick(delta);
+		if (c->deleteMe) {
+			coinDeletionQueue.push_back(c);
+			player->numberOfCoins++;
+		}
+	}
+
+	for (Coin* c : coinDeletionQueue) {
+		auto iter = std::find(coins.begin(), coins.end(), c);
+
+		if (iter != coins.end()) {
+			// Erase the coin pointer from the coins vector
+			coins.erase(iter);
+
+			// Delete the coin object
+			delete c;
+		}
 	}
 }
 
@@ -64,8 +77,7 @@ void Space::renderWorld()
 
 	for (Coin *c : coins)
 	{
-		glm::mat4 mvp = proj * viewMatrix * c->getModelMatrix();
-		c->render(mvp);
+		c->draw(proj, viewMatrix, c->getModelMatrix());
 	}
 
 	player->draw(proj, camera->getLookAt(), player->getModelMatrix());
@@ -78,7 +90,7 @@ void Space::loadLevel1()
 		std::string("res/shaders/Skybox.shader"),
 		std::string("res/textures/labskybox512.tga")
 	);
-	player->setPosition(glm::vec3(0.f, 1.f, 0.f));
+	player->setPosition(glm::vec3(10.f, 10.f, 0.f));
 
 	// Setup shader with lighting
 	Shader *shader = new Shader("res/shaders/WorldObject.shader");
@@ -122,7 +134,7 @@ void Space::loadLevel1()
 
 void Space::addCoin(glm::vec3 pos)
 {
-	Coin *c = new Coin(coinShader, coinModel, pos);
+	Coin *c = new Coin(coinShader, coinModel, pos, player);
 	coins.push_back(c);
 }
 
