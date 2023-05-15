@@ -8,18 +8,21 @@
 
 #include "Player.h"
 
-class Camera {
+class Camera
+{
 private:
 	const float kSensitivity = 1.f;
 	const float kTargetDistance = 5.f;
 
 public:
-	Player* player;
+	Player *player;
 	glm::vec3 mTargetPos, mDir, mUp;
 	float mPitch, mYaw;
-	Camera(glm::vec3 front, Player* p);
+	float pPlayerYaw;
+	Camera(glm::vec3 front, Player *p);
 
 	glm::mat4 getLookAt();
+	glm::vec3 getPosition();
 	void rotate(float pitchDiff, float yawDiff);
 	void updateTargetPos();
 	std::string toString();

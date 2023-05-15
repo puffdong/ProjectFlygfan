@@ -23,10 +23,10 @@ private:
 
 	std::vector<WorldObject*> wObjects;
 
-	glm::mat4 proj = glm::frustum(-0.5f, 0.5f, -0.5f, 0.5f, 1.0f, 256.0f);
+	//glm::mat4 proj = glm::frustum(-0.5f * 16.f/9.0f, 0.5f * 16.f / 9.0f, -0.5f, 0.5f, 1.0f, 256.0f);
+	
+	glm::mat4 proj = glm::perspective(glm::radians(70.f), 16.f / 9.0f, 1.0f, 256.0f);
 
-	std::vector<LightSource> lightSources;
-	std::vector<int> isDirectional;
 	Skybox* skybox;
 	
 public:

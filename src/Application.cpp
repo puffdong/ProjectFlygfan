@@ -65,6 +65,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             case GLFW_KEY_RIGHT:
                 bm.Right = true;
                 break;
+            case GLFW_KEY_LEFT_CONTROL:
+                bm.Ctrl = true;
+                break;
         }
     }
     else if (action == GLFW_RELEASE) {
@@ -96,6 +99,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             case GLFW_KEY_RIGHT:
                 bm.Right = false;
                 break;
+            case GLFW_KEY_LEFT_CONTROL:
+                bm.Ctrl = false;
+                break;
         }
     }
 }
@@ -115,7 +121,7 @@ int main(void)
     glfwWindowHint(GLFW_DEPTH_BITS, 24);
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Project Birdo", NULL, NULL);
+    window = glfwCreateWindow(1600, 900, "Project Birdo", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
