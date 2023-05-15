@@ -23,8 +23,8 @@ Texture::Texture(const std::string& path)
 	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
 	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, tgaData.width, tgaData.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tgaData.imageData);
-	glBindTexture(GL_TEXTURE_2D, 0); // unbind in the end
+	GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, tgaData.width, tgaData.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, tgaData.imageData));
+	GLCall(glBindTexture(GL_TEXTURE_2D, 0)); // unbind in the end
 }
 
 
@@ -33,8 +33,8 @@ Texture::~Texture() {
 }
 
 void Texture::Bind(unsigned int slot) const {
-	glActiveTexture(GL_TEXTURE0 + slot);
-	glBindTexture(GL_TEXTURE_2D, m_RendererID);
+	GLCall(glActiveTexture(GL_TEXTURE0 + slot));
+	GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererID));
 }
 
 void Texture::Unbind() const {

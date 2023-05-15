@@ -1,10 +1,13 @@
 #include "Player.h"
+#include <iostream>
+#include <string>
 
 Player::Player(glm::vec3 startPos)
-	: model("res/models/lowpolybird.obj"), position(startPos), velocity(0.f, 0.f, 0.f),
+	: model("res/models/lowpolybird.obj"), texture("res/textures/nerfthisbird.tga"), position(startPos), velocity(0.f, 0.f, 0.f),
 	  isOnGround(true), pitch(0.f), yaw(0.f), numberOfCoins(0.f)
 {
-	shader = new Shader("res/shaders/Basic.shader");
+	shader = new Shader("res/shaders/Player.shader");
+	
 }
 
 void Player::tick(float delta, ButtonMap bm)
@@ -63,11 +66,21 @@ void Player::move(ButtonMap bm)
 	position += movement * 0.02f;
 }
 
-void Player::draw(glm::mat4 mvp)
+void Player::draw(glm::mat4 proj, glm::mat4 view, glm::mat4 modelM)
 {
 	shader->Bind();
-	shader->SetUniform4f("u_Color", 1.0f, 0.f, 1.0f, 1.0f);
-	shader->SetUniformMat4("u_MVP", mvp);
+	texture.Bind(0);
+	shader->SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
+
+	shader->SetUniformMat4("proj", proj);
+	shader->SetUniformMat4("view", view);
+	shader->SetUniformMat4("model", modelM);
+
+	
+	shader->SetUniform1i("u_Texture", 0);
+	shader->SetUniform3f("sunDir", glm::vec3(1.f, 0.5f, 0.f));
+	shader->SetUniform3f("sunColor", glm::vec3(1.f, 1.f, 1.f));
+
 	model.render();
 }
 

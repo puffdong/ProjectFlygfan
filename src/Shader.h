@@ -31,6 +31,7 @@ public:
 	void SetUniform1i(const std::string& name, GLint i);
 	void SetUniform1iv(const std::string& name, std::vector<int> inVector);
 	void SetUniformMat4(const std::string& name, const glm::mat4& matrix);
+	void SetUniform3f(const std::string& name, glm::vec3 vec);
 
 
 private:

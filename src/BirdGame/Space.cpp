@@ -84,8 +84,7 @@ void Space::renderWorld()
 		c->render(mvp);
 	}
 
-	mvp = proj * camera->getLookAt() * player->getModelMatrix();
-	player->draw(mvp);
+	player->draw(proj, camera->getLookAt(), player->getModelMatrix());
 }
 
 void Space::loadLevel1()
@@ -99,7 +98,7 @@ void Space::loadLevel1()
 	// Setup shader with lighting
 	Shader *shader = new Shader("res/shaders/WorldObject.shader");
 	LightSource newLightSources[] = {
-		LightSource(glm::vec3(0.f, 0.f, 1.f), glm::vec3(1.f, 0.f, 0.f), true),
+		LightSource(glm::vec3(0.f, 0.f, 1.f), glm::vec3(1.f, 1.f, 0.f), true),
 		LightSource(glm::vec3(1.f, 0.f, 0.f), glm::vec3(-1.f, 0.f, 0.f), true)
 	};
 

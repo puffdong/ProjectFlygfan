@@ -4,13 +4,15 @@
 
 #include "../Shader.h"
 #include "../OBJLoader.h"
+#include "../Texture.h"
 #include "Utility/ButtonMap.h"
 
 class Player
 {
 private:
 	ModelObject model;
-	Shader *shader;
+	Shader* shader;
+	Texture texture;
 
 	void move(ButtonMap bm);
 
@@ -27,7 +29,7 @@ public:
 
 	Player(glm::vec3 startPos);
 	void tick(float delta, ButtonMap bm);
-	void draw(glm::mat4 mvp);
+	void draw(glm::mat4 proj, glm::mat4 view, glm::mat4 modelM);
 	glm::vec3 getPosition();
 	glm::mat4 getModelMatrix();
 	float getYaw();
