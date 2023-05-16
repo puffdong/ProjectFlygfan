@@ -162,7 +162,7 @@ int main(void)
         renderer.Clear();
 
         space->tick(deltaTime, bm);
-        space->renderWorld();
+        space->renderWorld(deltaTime);
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);

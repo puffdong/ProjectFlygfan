@@ -15,6 +15,10 @@ ModelObject::ModelObject(float width, float depth) {
     createFlatGround(width, depth);
 }
 
+ModelObject::ModelObject(float width, float depth, int numRows, int numCols) {
+    createFlatGround(width, depth, numRows, numCols);
+}
+
 ModelObject::ModelObject(float width, float depth, float height, TextureData* mapTexture)
 {
     createHeightmap(width, depth, height, mapTexture);
@@ -392,4 +396,66 @@ void ModelObject::createHeightmap(float width, float depth, float height, Textur
     m_vertexArray = vertexArray;
     m_normalArray = normalArray;
     m_texCoordArray = texCoordArray;
+}
+
+void ModelObject::createFlatGround(float width, float depth, int numRows, int numCols) {
+    // Calculate quad dimensions
+    float quadWidth = width / static_cast<float>(numCols);
+    float quadDepth = depth / static_cast<float>(numRows);
+
+    // Create vertex data
+    std::vector<float> vertices;
+    std::vector<unsigned int> indices;
+
+    for (int row = 0; row < numRows; ++row) {
+        for (int col = 0; col < numCols; ++col) {
+            float x = col * quadWidth - width / 2.0f;
+            float z = row * quadDepth - depth / 2.0f;
+
+            // Add positions, normals, and texture coordinates for each vertex of the quad
+            vertices.insert(vertices.end(), {
+                x, 0.0f, z,          0.0f, 1.0f, 0.0f,      static_cast<float>(col) / numCols, static_cast<float>(row) / numRows,
+                x + quadWidth, 0.0f, z,          0.0f, 1.0f, 0.0f,      static_cast<float>(col + 1) / numCols, static_cast<float>(row) / numRows,
+                x + quadWidth, 0.0f, z + quadDepth, 0.0f, 1.0f, 0.0f,      static_cast<float>(col + 1) / numCols, static_cast<float>(row + 1) / numRows,
+                x, 0.0f, z + quadDepth, 0.0f, 1.0f, 0.0f,      static_cast<float>(col) / numCols, static_cast<float>(row + 1) / numRows
+                });
+
+            // Add indices for the quad
+            unsigned int baseIndex = (row * numCols + col) * 4;
+            indices.insert(indices.end(), {
+                baseIndex, baseIndex + 1, baseIndex + 2,
+                baseIndex + 2, baseIndex + 3, baseIndex
+                });
+        }
+    }
+
+    GLuint VAO, VBO, EBO;
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+    glGenBuffers(1, &EBO);
+
+    // Bind and populate VAO
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), vertices.data(), GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
+
+    // Set vertex attribute pointers
+    GLsizei stride = 8 * sizeof(float); // 3 for position, 3 for normals, and 2 for texture coordinates
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, reinterpret_cast<void*>(0));
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, stride, reinterpret_cast<void*>(3 * sizeof(float)));
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride, reinterpret_cast<void*>(6 * sizeof(float)));
+
+    // Unbind the VAO
+    glBindVertexArray(0);
+
+    // Store the VAO and other related information in your ModelObject class
+    m_VAO = VAO;
+    m_VBO = VBO;
+    m_EBO = EBO;
+    m_indexCount = static_cast<GLsizei>(indices.size());
 }

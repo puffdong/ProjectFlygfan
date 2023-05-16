@@ -2,6 +2,7 @@
 #include <iostream>
 
 Space::Space()
+	: perlinNoise("res/textures/perlinnoise.tga")
 {
 
 	player = new Player(glm::vec3(0.f, 0.f, 0.f));
@@ -47,7 +48,7 @@ void Space::tick(float delta, ButtonMap bm)
 	}
 }
 
-void Space::renderWorld()
+void Space::renderWorld(float delta)
 {
 	glm::mat4 viewMatrix = camera->getLookAt();
 	skybox->draw(proj, camera);
@@ -65,6 +66,19 @@ void Space::renderWorld()
 	}
 
 	player->draw(proj, viewMatrix, player->getModelMatrix());
+
+	//render water
+	waterTime += delta * 0.01f;
+	waterShader->Bind();
+	perlinNoise.Bind(1);
+	waterShader->SetUniform1i("perlinNoise", 1);
+	waterShader->SetUniform1f("time", waterTime);
+	waterShader->SetUniform3f("sunDir", glm::vec3(1.f, 0.5f, 0.f));
+	waterShader->SetUniform3f("sunColor", glm::vec3(1.f, 1.f, 1.f));
+	waterShader->SetUniform3f("playerPosition", player->getPosition());
+	waterShader->SetUniformMat4("proj", proj);
+	waterObject->draw(proj, viewMatrix, waterObject->getModelMatrix());
+
 }
 
 void Space::loadLevel1()
@@ -107,6 +121,13 @@ void Space::loadLevel1()
 	ground = new Ground(
 		groundDims, groundTrans, "res/textures/fft-terrain.tga", worldShader, "res/textures/grass.tga"
 	);
+
+
+	//water stuff
+	waterShader = new Shader("res/shaders/Water.shader");
+	waterModel = new ModelObject(30.f, 30.f, 60, 60);
+	waterObject = new WorldObject(waterShader, waterModel, glm::vec3(20.f, 10.f, 5.f), glm::vec3(0.f));
+	waterTime = 0.0f;
 
 	setUpCoinsLevel1();
 }

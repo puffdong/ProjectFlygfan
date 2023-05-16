@@ -36,7 +36,7 @@ public:
 
 	void tick(float delta, ButtonMap bm);
 
-	void renderWorld();
+	void renderWorld(float delta);
 
 
 private:
@@ -52,4 +52,12 @@ private:
 	void addCoin(glm::vec3 pos);
 	
 	void setUpCoinsLevel1();
+
+
+	//water stuff
+	Shader* waterShader;
+	ModelObject* waterModel;
+	Texture perlinNoise;
+	WorldObject* waterObject;
+	float waterTime;
 };
