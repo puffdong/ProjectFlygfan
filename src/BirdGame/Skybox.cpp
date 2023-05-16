@@ -19,6 +19,10 @@ void Skybox::draw(glm::mat4 projMatrix, Camera *camera)
 	shader->SetUniformMat4("u_MVP", mvp);
 
 	GLCall(glDisable(GL_DEPTH_TEST));
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 	model->render();
 	GLCall(glEnable(GL_DEPTH_TEST));
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
+	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
 }

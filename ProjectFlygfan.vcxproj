@@ -305,6 +305,7 @@
     <None Include="Dependencies\glm\gtx\wrap.inl" />
     <None Include="res\shaders\Basic.shader" />
     <None Include="res\shaders\Coin.shader" />
+    <None Include="res\shaders\Ground.shader" />
     <None Include="res\shaders\Player.shader" />
     <None Include="res\shaders\Skybox.shader" />
     <None Include="res\shaders\Water.shader" />

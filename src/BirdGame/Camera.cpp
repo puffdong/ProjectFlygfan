@@ -7,6 +7,7 @@ Camera::Camera(glm::vec3 front, Player *p)
 	mUp = glm::vec3(0.f, 1.f, 0.f);
 	mPitch = 0.f;
 	pPlayerYaw = p->getYaw();
+	mCurrentDistance = kTargetDistance;
 	mYaw = acos(glm::dot(mDir, mUp) / (glm::length(mUp) * glm::length(mDir)));
 	updateTargetPos();
 }
@@ -19,18 +20,19 @@ void Camera::updateTargetPos()
 
 glm::mat4 Camera::getLookAt()
 {
-	glm::vec3 dir(0.f);
-	dir.x = cos(mYaw - pPlayerYaw) * cos(mPitch);
-	dir.y = sin(mPitch);
-	dir.z = sin(mYaw - pPlayerYaw) * cos(mPitch);
+	glm::vec3 dir(
+		cos(mYaw - pPlayerYaw) * cos(mPitch),
+		sin(mPitch),
+		sin(mYaw - pPlayerYaw) * cos(mPitch)
+	);
 	mDir = glm::normalize(dir);
 
-	return glm::lookAt(mTargetPos - mDir * kTargetDistance, mTargetPos, mUp);
+	return glm::lookAt(getPosition(), mTargetPos, mUp);
 }
 
 glm::vec3 Camera::getPosition()
 {
-	return mTargetPos - mDir * kTargetDistance;
+	return mTargetPos - mDir * mCurrentDistance;
 }
 
 void Camera::tick(float delta, ButtonMap bm)
@@ -54,6 +56,32 @@ void Camera::tick(float delta, ButtonMap bm)
 			(float)pitchDir * kSensitivity * delta, 
 			(float)yawDir * kSensitivity * delta
 		);
+	}
+}
+
+bool Camera::zoomIn(float diff)
+{
+	float newDistance = mCurrentDistance - diff;
+	if (newDistance > 1.f) {
+		mCurrentDistance = newDistance;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool Camera::zoomOut(float diff)
+{
+	float newDistance = mCurrentDistance + diff;
+	if (newDistance < kTargetDistance) {
+		mCurrentDistance = newDistance;
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 

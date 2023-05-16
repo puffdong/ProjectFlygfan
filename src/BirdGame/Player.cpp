@@ -1,6 +1,5 @@
 #define _USE_MATH_DEFINES
 #include "Player.h"
-#include <math.h>
 
 Player::Player(glm::vec3 startPos)
 	: model("res/models/lowpolybird.obj"), texture("res/textures/nerfthisbird.tga"), position(startPos), velocity(0.f, 0.f, 0.f),
@@ -33,7 +32,11 @@ void Player::move(ButtonMap bm, float delta)
 	if (bm.D)
 		yaw -= yawDiff;
 
-	glm::vec3 movement = glm::vec3(glm::sin(yaw), glm::sin(pitch), cos(yaw));
+	glm::vec3 movement = glm::vec3(
+		sin(yaw) * cos(pitch),
+		sin(pitch), 
+		cos(yaw) * cos(pitch)
+	);
 
 	if (bm.Space)
 		movement = glm::vec3(0.f);

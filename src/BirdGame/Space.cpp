@@ -20,10 +20,38 @@ Space::Space()
 void Space::tick(float delta, ButtonMap bm)
 {
 	player->tick(delta, bm);
-	camera->tick(delta, bm);
 
 	glm::vec3 playerPos = player->getPosition();
-	//std::cout << "Distance to ground: " << playerPos.y - ground->calcHeight(playerPos.x, playerPos.z) << std::endl;
+	float groundHeightPlayer = ground->calcHeight(playerPos.x, playerPos.z);
+	float distanceToGround = playerPos.y - groundHeightPlayer;
+	if (groundHeightPlayer < 0.f || distanceToGround < 0.f) {
+		resetPlayer();
+	}
+
+	glm::vec3 cameraPos = camera->getPosition();
+	float groundHeightCamera = ground->calcHeight(cameraPos.x, cameraPos.z);
+	if (cameraPos.y - groundHeightCamera < 2.f) {
+		bool succeeded;
+		zoomOutTimer = 0.5f;
+		// Zoom in until camera stops colliding
+		do {
+			succeeded = camera->zoomIn(0.1f);
+			cameraPos = camera->getPosition();
+			groundHeightCamera = ground->calcHeight(cameraPos.x, cameraPos.z);
+
+		} while (succeeded && cameraPos.y - groundHeightCamera < 0.f);
+	}
+	else if (zoomOutTimer < 0.f) {
+		// Zoom out until limit is reached or camera collides
+		camera->zoomOut(0.1f);
+	}
+	else {
+		//std::cout << "Timer: " << zoomOutTimer << std::endl;
+		zoomOutTimer -= delta;
+	}
+
+	camera->tick(delta, bm);
+	//std::cout << "Distance to ground: " << distanceToGround << std::endl;
 
 	std::vector<Coin*> coinDeletionQueue;
 
@@ -46,6 +74,13 @@ void Space::tick(float delta, ButtonMap bm)
 			delete c;
 		}
 	}
+}
+
+void Space::resetPlayer()
+{
+	player->setPosition(playerStartPos);
+	player->yaw = 0.f;
+	player->pitch = 0.f;
 }
 
 void Space::renderWorld(float delta)
@@ -84,17 +119,19 @@ void Space::renderWorld(float delta)
 void Space::loadLevel1()
 {
 	skybox = new Skybox(
-		std::string("res/models/labskybox.obj"),
+		std::string("res/models/skybox-full-tweaked.obj"),
 		std::string("res/shaders/Skybox.shader"),
-		std::string("res/textures/labskybox512.tga")
+		std::string("res/textures/skybox/cloud-landscape.tga")
 	);
-	player->setPosition(glm::vec3(10.f, 10.f, 0.f));
+
+	playerStartPos = glm::vec3(10.f, 10.f, 0.f);
+	player->setPosition(playerStartPos);
 
 	// Setup shader with lighting
 	Shader *worldShader = new Shader("res/shaders/WorldObject.shader");
 	LightSource newLightSources[] = {
-		LightSource(glm::vec3(0.f, 0.f, 1.f), glm::vec3(1.f, 1.f, 0.f), true),
-		LightSource(glm::vec3(1.f, 0.f, 0.f), glm::vec3(-1.f, 0.f, 0.f), true)
+//		LightSource(glm::vec3(0.f, 0.5f, 0.f), glm::vec3(-1.f, 0.f, 0.f), true),
+		LightSource(glm::vec3(1.f, 1.f, 1.f), glm::vec3(1.f, 1.f, 0.f), true)
 	};
 
 	std::vector<glm::vec3> lightColors;
@@ -116,10 +153,16 @@ void Space::loadLevel1()
 	WorldObject *teapotObject = new WorldObject(worldShader, "res/models/teapot.obj", glm::vec3(-10.f, 0.f, 0.f), glm::vec3(0.f));
 	wObjects.push_back(teapotObject);
 
+	/*Shader* groundShader = new Shader("res/shader/Ground.shader");
+	groundShader->Bind();
+	groundShader->SetUniform1i("numLights", lightColors.size());
+	groundShader->SetUniform3fv("lightColors", lightColors);
+	groundShader->SetUniform3fv("lightDirs", lightDirs);
+	groundShader->SetUniform1iv("isDirectional", isDirectional);*/
 	glm::vec3 groundDims(100.f, 20.f, 100.f);
 	glm::mat4 groundTrans = glm::translate(glm::mat4(1.f), glm::vec3(0.f));
 	ground = new Ground(
-		groundDims, groundTrans, "res/textures/fft-terrain.tga", worldShader, "res/textures/grass.tga"
+		groundDims, groundTrans, "res/textures/terrain/fft-terrain.tga", worldShader, "res/textures/grass.tga"
 	);
 
 
