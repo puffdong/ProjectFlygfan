@@ -31,6 +31,7 @@ private:
 	glm::mat4 proj = glm::perspective(glm::radians(70.f), 16.f / 9.0f, 1.0f, 256.0f);
 
 	float zoomOutTimer = -1.f;
+	float deathTimer = -1.f;
 	
 public:
 	Space();

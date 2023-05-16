@@ -19,13 +19,21 @@ Space::Space()
 
 void Space::tick(float delta, ButtonMap bm)
 {
-	player->tick(delta, bm);
-
-	glm::vec3 playerPos = player->getPosition();
-	float groundHeightPlayer = ground->calcHeight(playerPos.x, playerPos.z);
-	float distanceToGround = playerPos.y - groundHeightPlayer;
-	if (groundHeightPlayer < 0.f || distanceToGround < 0.f) {
+	if (deathTimer > 1.f) {
+		deathTimer -= delta;
+	}
+	else if (deathTimer > 0.f) {
+		deathTimer -= delta;
 		resetPlayer();
+	}
+	else {
+		player->tick(delta, bm);
+		glm::vec3 playerPos = player->getPosition();
+		float groundHeightPlayer = ground->calcHeight(playerPos.x, playerPos.z);
+		float distanceToGround = playerPos.y - groundHeightPlayer;
+		if (groundHeightPlayer < -1.f || distanceToGround < 0.f) {
+			deathTimer = 4.f;
+		}
 	}
 
 	glm::vec3 cameraPos = camera->getPosition();
@@ -42,16 +50,14 @@ void Space::tick(float delta, ButtonMap bm)
 		} while (succeeded && cameraPos.y - groundHeightCamera < 0.f);
 	}
 	else if (zoomOutTimer < 0.f) {
-		// Zoom out until limit is reached or camera collides
+		// Try to zoom out if the timer has reached 0
 		camera->zoomOut(0.1f);
 	}
 	else {
-		//std::cout << "Timer: " << zoomOutTimer << std::endl;
 		zoomOutTimer -= delta;
 	}
 
 	camera->tick(delta, bm);
-	//std::cout << "Distance to ground: " << distanceToGround << std::endl;
 
 	std::vector<Coin*> coinDeletionQueue;
 
@@ -81,6 +87,7 @@ void Space::resetPlayer()
 	player->setPosition(playerStartPos);
 	player->yaw = 0.f;
 	player->pitch = 0.f;
+	player->roll = 0.f;
 }
 
 void Space::renderWorld(float delta)
