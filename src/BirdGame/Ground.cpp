@@ -22,7 +22,10 @@ void Ground::draw(glm::mat4 projMatrix, glm::mat4 worldMatrix) {
 	shader->SetUniformMat4("u_MVP", projMatrix * worldMatrix * mTranslation);
 	shader->SetUniformMat4("modelMatrix", mTranslation);
 	shader->SetUniformMat4("worldMatrix", worldMatrix);
-    shader->SetUniform1f("textureScale", 100.f);
+    shader->SetUniform1f("textureScale", 20.f);
+    shader->SetUniform1f("specularStrength", 0.4f);
+    shader->SetUniform1f("diffuseStrength", 0.6f);
+    shader->SetUniform1i("shininess", 32);
 	graphicTexture->Bind(0);
     GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
     GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));

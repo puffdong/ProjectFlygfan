@@ -3,7 +3,7 @@
 
 Player::Player(glm::vec3 startPos)
 	: model("res/models/lowpolybird.obj"), texture("res/textures/nerfthisbird.tga"), position(startPos), velocity(0.f, 0.f, 0.f),
-	  isOnGround(true), pitch(0.f), yaw(0.f), numberOfCoins(0.f)
+	  isOnGround(true), pitch(0.f), yaw(0.f), roll(0.f), numberOfCoins(0.f)
 {
 	shader = new Shader("res/shaders/Player.shader");
 	
@@ -25,12 +25,14 @@ void Player::move(ButtonMap bm, float delta)
 	if (bm.S && pitch > -halfPi + pitchDiff)
 		pitch -= pitchDiff;
 
-	float yawDiff = kYawSpeed * delta;
-	if (bm.A)
-		yaw += yawDiff;
+	float rollDiff = kRollSpeed * delta;
+	if (bm.A && roll < halfPi * 0.8 - rollDiff)
+		roll += rollDiff;
 
-	if (bm.D)
-		yaw -= yawDiff;
+	if (bm.D && roll > -halfPi * 0.8 + rollDiff)
+		roll -= rollDiff;
+
+	yaw += pow(roll, 3) * delta * kYawSpeed;
 
 	glm::vec3 movement = glm::vec3(
 		sin(yaw) * cos(pitch),
@@ -68,8 +70,13 @@ glm::vec3 Player::getPosition()
 }
 
 glm::mat4 Player::getModelMatrix() {
-	return glm::translate(glm::mat4(1.f), position) * glm::rotate(glm::mat4(1.f), yaw, glm::vec3(0.f, 1.f, 0.f)) * glm::rotate(glm::mat4(1.f), -pitch, glm::vec3(1.f, 0.f, 0.f))
-		* glm::scale(glm::mat4(1.f), glm::vec3(7.f));
+	return glm::translate(
+		glm::mat4(1.f), position) 
+		* glm::rotate(glm::mat4(1.f), yaw, glm::vec3(0.f, 1.f, 0.f)) 
+		* glm::rotate(glm::mat4(1.f), -pitch, glm::vec3(1.f, 0.f, 0.f))
+		* glm::rotate(glm::mat4(1.f), -roll, glm::vec3(0.f, 0.f, 1.f))
+		* glm::scale(glm::mat4(1.f), glm::vec3(7.f)
+		);
 }
 
 float Player::getYaw()

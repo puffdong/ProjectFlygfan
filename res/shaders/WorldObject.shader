@@ -35,13 +35,12 @@ uniform vec3 lightColors[10];
 uniform vec3 lightDirs[10];
 uniform bool isDirectional[10];
 uniform float textureScale;
+uniform float specularStrength;
+uniform float diffuseStrength;
+uniform int shininess;
 
 void main()
 {
-	float specularStrength = 0.8;
-	float diffuseStrength = 0.5;
-	int shininess = 64;
-
 	vec3 surfacePos = vec3(worldMatrix * modelMatrix * vec4(v_pos, 1.0));
 
 	mat3 normalMatrix = transpose(inverse(mat3(modelMatrix)));

@@ -13,9 +13,10 @@ private:
 	ModelObject model;
 	Shader *shader;
 	Texture texture;
-	const float kMoveSpeed = 1.f;
+	const float kMoveSpeed = 5.f;
 	const float kPitchSpeed = 1.f;
-	const float kYawSpeed = 1.f;
+	const float kYawSpeed = 0.5f;
+	const float kRollSpeed = 1.f;
 
 	void move(ButtonMap bm, float delta);
 
@@ -26,6 +27,7 @@ public:
 
 	float pitch;
 	float yaw;
+	float roll;
 
 	// Game logic related
 	int numberOfCoins;
