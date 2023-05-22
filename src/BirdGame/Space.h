@@ -12,6 +12,7 @@
 #include "WorldObject.h"
 #include "Skybox.h"
 #include "Ground.h"
+#include "Water.h"
 
 
 #include "Utility/ButtonMap.h"
@@ -20,18 +21,16 @@
 class Space {
 private:
 	Player* player;
-	Camera* camera;
-	Skybox* skybox;
 	glm::vec3 playerStartPos;
-
-	std::vector<WorldObject*> wObjects;
-
-	//glm::mat4 proj = glm::frustum(-0.5f * 16.f/9.0f, 0.5f * 16.f / 9.0f, -0.5f, 0.5f, 1.0f, 256.0f);
-	
-	glm::mat4 proj = glm::perspective(glm::radians(70.f), 16.f / 9.0f, 1.0f, 256.0f);
-
 	float zoomOutTimer = -1.f;
 	float deathTimer = -1.f;
+
+	std::vector<WorldObject*> wObjects;
+	std::vector<WorldObject*> wTransparentObjects;
+	Skybox* skybox;
+	
+	glm::mat4 proj = glm::perspective(glm::radians(70.f), 16.f / 9.0f, 1.0f, 256.0f);
+	Camera* camera;
 	
 public:
 	Space();
@@ -41,7 +40,6 @@ public:
 	void tick(float delta, ButtonMap bm);
 
 	void renderWorld(float delta);
-
 
 private:
 	void loadLevel1();

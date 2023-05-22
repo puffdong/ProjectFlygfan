@@ -33,6 +33,7 @@ void Ground::draw(glm::mat4 projMatrix, glm::mat4 worldMatrix) {
 	model->render();
 }
 
+/* Get the height off the ground, used for collision detection */
 float Ground::calcHeight(float x, float z) {
 	glm::vec3 pos = glm::vec3(mTranslation * glm::vec4(x, 0, z, 1.f));
 
@@ -44,7 +45,6 @@ float Ground::calcHeight(float x, float z) {
     std::vector<glm::vec3> vertexArray = model->getVertexArray();
     GLfloat xStep = vertexArray[1].x - vertexArray[0].x;
     GLfloat zStep = vertexArray[mapWidth].z - vertexArray[0].z;
-
 
     GLint xIndex = -1;
     GLint zIndex = -1;

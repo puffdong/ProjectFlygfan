@@ -22,11 +22,13 @@ public:
 	glm::mat4 getLookAt();
 	glm::vec3 getPosition();
 	void rotate(float pitchDiff, float yawDiff);
-	void updateTargetPos();
 	void tick(float delta, ButtonMap bm);
 
 	bool zoomIn(float diff);
 	bool zoomOut(float diff);
 
 	std::string toString();
+
+private:
+	void updateTargetPos();
 };

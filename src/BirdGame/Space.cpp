@@ -14,12 +14,14 @@ Space::Space()
 	coinModel = new ModelObject("res/models/Coin.obj");
 	coinShader = new Shader("res/shaders/Coin.shader");
 
+	
+
 	loadLevel1();
 }
 
 void Space::tick(float delta, ButtonMap bm)
 {
-	if (deathTimer > 1.f) {
+	if (deathTimer > 1.f) { // Upon Player death this is activated
 		deathTimer -= delta;
 	}
 	else if (deathTimer > 0.f) {
@@ -82,6 +84,8 @@ void Space::tick(float delta, ButtonMap bm)
 	}
 }
 
+
+
 void Space::resetPlayer()
 {
 	player->setPosition(playerStartPos);
@@ -89,6 +93,8 @@ void Space::resetPlayer()
 	player->pitch = 0.f;
 	player->roll = 0.f;
 }
+
+
 
 void Space::renderWorld(float delta)
 {
@@ -99,6 +105,7 @@ void Space::renderWorld(float delta)
 
 	for (WorldObject *o : wObjects)
 	{
+		o->tick(delta);
 		o->draw(proj, viewMatrix, o->getModelMatrix());
 	}
 
@@ -109,19 +116,13 @@ void Space::renderWorld(float delta)
 
 	player->draw(proj, viewMatrix, player->getModelMatrix());
 
-	//render water
-	waterTime += delta * 0.01f;
-	waterShader->Bind();
-	perlinNoise.Bind(1);
-	waterShader->SetUniform1i("perlinNoise", 1);
-	waterShader->SetUniform1f("time", waterTime);
-	waterShader->SetUniform3f("sunDir", glm::vec3(1.f, 0.5f, 0.f));
-	waterShader->SetUniform3f("sunColor", glm::vec3(1.f, 1.f, 1.f));
-	waterShader->SetUniform3f("playerPosition", player->getPosition());
-	waterShader->SetUniformMat4("proj", proj);
-	waterObject->draw(proj, viewMatrix, waterObject->getModelMatrix());
-
+	for (WorldObject* o : wTransparentObjects) {
+		o->tick(delta);
+		o->draw(proj, viewMatrix, o->getModelMatrix());
+	}
 }
+
+
 
 void Space::loadLevel1()
 {
@@ -131,7 +132,7 @@ void Space::loadLevel1()
 		std::string("res/textures/skybox/cloud-landscape.tga")
 	);
 
-	playerStartPos = glm::vec3(10.f, 10.f, 0.f);
+	playerStartPos = glm::vec3(30.f, 40.f, 0.f);
 	player->setPosition(playerStartPos);
 
 	// Setup shader with lighting
@@ -160,12 +161,6 @@ void Space::loadLevel1()
 	WorldObject *teapotObject = new WorldObject(worldShader, "res/models/teapot.obj", glm::vec3(-10.f, 0.f, 0.f), glm::vec3(0.f));
 	wObjects.push_back(teapotObject);
 
-	/*Shader* groundShader = new Shader("res/shader/Ground.shader");
-	groundShader->Bind();
-	groundShader->SetUniform1i("numLights", lightColors.size());
-	groundShader->SetUniform3fv("lightColors", lightColors);
-	groundShader->SetUniform3fv("lightDirs", lightDirs);
-	groundShader->SetUniform1iv("isDirectional", isDirectional);*/
 	glm::vec3 groundDims(100.f, 20.f, 100.f);
 	glm::mat4 groundTrans = glm::translate(glm::mat4(1.f), glm::vec3(0.f));
 	ground = new Ground(
@@ -175,9 +170,9 @@ void Space::loadLevel1()
 
 	//water stuff
 	waterShader = new Shader("res/shaders/Water.shader");
-	waterModel = new ModelObject(30.f, 30.f, 60, 60);
-	waterObject = new WorldObject(waterShader, waterModel, glm::vec3(20.f, 10.f, 5.f), glm::vec3(0.f));
-	waterTime = 0.0f;
+	waterModel = new ModelObject(80.f, 80.f, 80, 80);
+	WorldObject* water = new WaterSurface(waterShader, waterModel, glm::vec3(50.f, 5.f, 60.f), glm::vec3(0.f), &perlinNoise, player);
+	wTransparentObjects.push_back(water);
 
 	setUpCoinsLevel1();
 }
@@ -190,7 +185,10 @@ void Space::addCoin(glm::vec3 pos)
 
 void Space::setUpCoinsLevel1()
 {
-	addCoin(glm::vec3(3, 3, 3));
+	addCoin(glm::vec3(50, 15, 80));
+	addCoin(glm::vec3(60, 15, 87));
+	addCoin(glm::vec3(40, 10, 60));
+	addCoin(glm::vec3(30, 30, 30));
 	addCoin(glm::vec3(1, 2, 5));
 	addCoin(glm::vec3(-5, 2, 10));
 }

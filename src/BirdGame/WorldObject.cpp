@@ -15,6 +15,10 @@ WorldObject::WorldObject(Shader* s, ModelObject* m, glm::vec3 pos, glm::vec3 rot
 	rotation = rot;
 }
 
+void WorldObject::tick(float deltaTIme) {
+
+}
+
 void WorldObject::draw(glm::mat4 projMatrix, glm::mat4 worldMatrix, glm::mat4 modelMatrix) {
 	shader->Bind();
 	shader->SetUniformMat4("u_MVP", projMatrix * worldMatrix * modelMatrix);

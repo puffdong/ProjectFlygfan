@@ -57,6 +57,9 @@
     <ClCompile Include="src\BirdGame\Ground.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\BirdGame\Water.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\Basic.shader" />
@@ -491,6 +494,7 @@
     <None Include="res\shaders\Coin.shader" />
     <None Include="res\shaders\Skybox.shader" />
     <None Include="res\shaders\Ground.shader" />
+    <None Include="res\shaders\Water.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -1406,6 +1410,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\BirdGame\Ground.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BirdGame\Water.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

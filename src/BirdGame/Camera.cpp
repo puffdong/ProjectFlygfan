@@ -20,6 +20,8 @@ void Camera::updateTargetPos()
 
 glm::mat4 Camera::getLookAt()
 {
+	updateTargetPos();
+
 	glm::vec3 dir(
 		cos(mYaw - pPlayerYaw) * cos(mPitch),
 		sin(mPitch),
@@ -87,7 +89,7 @@ bool Camera::zoomOut(float diff)
 
 void Camera::rotate(float pitchDiff, float yawDiff)
 {
-	pPlayerYaw = player->getYaw();
+	updateTargetPos();
 	mPitch += pitchDiff * kSensitivity;
 	mYaw += yawDiff * kSensitivity;
 

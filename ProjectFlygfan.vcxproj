@@ -141,6 +141,7 @@
     <ClCompile Include="src\BirdGame\Player.cpp" />
     <ClCompile Include="src\BirdGame\Skybox.cpp" />
     <ClCompile Include="src\BirdGame\Space.cpp" />
+    <ClCompile Include="src\BirdGame\Water.cpp" />
     <ClCompile Include="src\BirdGame\WorldObject.cpp" />
     <ClCompile Include="src\LoadTGA.cpp" />
     <ClCompile Include="src\OBJLoader.cpp" />
@@ -610,6 +611,7 @@
     <ClInclude Include="src\BirdGame\Utility\ButtonMap.h" />
     <ClInclude Include="src\BirdGame\Utility\LightSource.h" />
     <ClInclude Include="src\BirdGame\Skybox.h" />
+    <ClInclude Include="src\BirdGame\Water.h" />
     <ClInclude Include="src\BirdGame\WorldObject.h" />
     <ClInclude Include="src\LoadTGA.h" />
     <ClInclude Include="src\OBJLoader.h" />

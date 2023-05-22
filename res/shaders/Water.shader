@@ -41,7 +41,6 @@ void main()
     
     gl_Position = u_MVP * vec4(newPosition, 1.0);
 
-
     TexCoord = aTexCoord;
 
     v_pos = aPos;
